@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Mundial 2026</title>
     <style>
         body {
             margin: 0;
@@ -9,21 +11,26 @@
             overflow: hidden;
             background: transparent;
         }
-        /* Esto empuja tu marcador hacia la derecha del chat */
-        .marcador-futbol {
+        /* Esto acomoda el bloque a la derecha de tu sala Jaquemate */
+        .contenedor-mundial {
             position: absolute;
-            right: 10px; 
-            top: 70px;
-            width: 250px;
-            height: 450px;
+            right: 15px; 
+            top: 65px;
+            width: 270px;
+            height: 480px;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente para que combine con el chat */
+            border-radius: 8px;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="marcador-futbol">
-        <https://www.365scores.com/es-mx>
-        <iframe src="TU_ENLACE_DEL_MARCADOR_AQUÍ" width="100%" height="100%" frameborder="0"></iframe>
+    <div class="contenedor-mundial">
+        <!-- AQUÍ ESTÁ TU CÓDIGO DE 365SCORES -->
+        </div>
+        <script src="https://widgets.365scores.com/main.js"></script>
     </div>
 
 </body>
