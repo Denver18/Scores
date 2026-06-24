@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mundial 2026 xatframe</title>
+    <title>Mundial 2026</title>
     <style>
         body {
             margin: 0;
@@ -11,27 +11,22 @@
             overflow: hidden;
             background: transparent;
         }
-        /* Ajuste exacto para que encaje a la derecha en la sala Jaquemate */
-        .contenedor-mundial {
+        /* Esto acomoda perfectamente el marcador a la derecha en Jaquemate */
+        .marcador-mundial {
             position: absolute;
             right: 15px; 
             top: 65px;
             width: 280px;
-            height: 485px;
+            height: 500px;
             z-index: 9999;
         }
     </style>
 </head>
 <body>
 
-    <div class="contenedor-mundial">
-        <!-- Widget oficial filtrado para la Copa del Mundo -->
-        <iframe src="https://scoremer.com" 
-                width="100%" 
-                height="100%" 
-                frameborder="0" 
-                scrolling="yes">
-        </iframe>
+    <div class="marcador-mundial">
+        <!-- AQUÍ ESTÁ TU CÓDIGO DE SCOREMER -->
+        <iframe style='width:100%; height:500px;' src='https://www.scoremer.com/widgets/fifa_worldcup_fixtures?c=9af9f4&f=000&lang=es' scrolling='auto' frameborder='0'></iframe>
     </div>
 
 </body>
