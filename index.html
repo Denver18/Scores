@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador Mundial 2026</title>
+    <title>Mundial xatframe</title>
     <style>
         body {
             margin: 0;
@@ -11,26 +11,25 @@
             overflow: hidden;
             background: transparent;
         }
-        /* Esto acomoda el bloque a la derecha de tu sala Jaquemate */
+        /* Esto lo posiciona exactamente a la derecha de tu sala Jaquemate */
         .contenedor-mundial {
             position: absolute;
             right: 15px; 
             top: 65px;
-            width: 270px;
-            height: 480px;
+            width: 280px;
+            height: 485px;
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente para que combine con el chat */
-            border-radius: 8px;
-            padding: 5px;
+            background: #1e1e24; /* Color oscuro para que no quede gris vacío */
+            border: 1px solid #333;
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
 
     <div class="contenedor-mundial">
-        <!-- AQUÍ ESTÁ TU CÓDIGO DE 365SCORES -->
-        </div>
-        <script src="https://widgets.365scores.com/main.js"></script>
+        <!-- Widget compatible con xat de Scorestream -->
+        <iframe src="https://scorestream.com" width="100%" height="100%" frameborder="0" scrolling="yes"></iframe>
     </div>
 
 </body>
