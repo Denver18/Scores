@@ -8,17 +8,16 @@
         body {
             margin: 0;
             padding: 0;
-            /* CAMBIO: Permitir scroll vertical en lugar de ocultarlo */
-            overflow-y: auto; 
+            overflow: hidden;
             background: transparent;
         }
+        /* Esto acomoda perfectamente el marcador a la derecha en Jaquemate */
         .marcador-mundial {
             position: absolute;
             right: 15px; 
             top: 65px;
             width: 280px;
-            /* CAMBIO: Altura máxima flexible para la caja contenedora */
-            max-height: 500px; 
+            height: 500px;
             z-index: 9999;
         }
     </style>
@@ -26,8 +25,8 @@
 <body>
 
     <div class="marcador-mundial">
-        <!-- El iframe ahora usará el scroll automático nativo de Scoremer -->
-        <iframe style='width:100%; height:500px;' src='https://scoremer.com' scrolling='yes' frameborder='0'></iframe>
+        <!-- AQUÍ ESTÁ TU CÓDIGO DE SCOREMER -->
+        <iframe style='width:100%; height:500px;' src='https://www.scoremer.com/widgets/fifa_worldcup_fixtures?c=9af9f4&f=000&lang=es' scrolling='auto' frameborder='0'></iframe>
     </div>
 
 </body>
