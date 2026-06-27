@@ -13,14 +13,14 @@
         }
         /* Contenedor principal posicionado a la derecha fija */
         .marcador-mundial {
-            position: fixed; /* Se mantiene visible al hacer scroll en la página principal */
+            position: fixed; 
             right: 15px; 
             top: 65px;
             width: 280px;
-            max-height: 500px;
+            height: 500px;
             z-index: 9999;
             pointer-events: auto !important; 
-            overflow-y: auto !important; /* Habilita el scroll interno si agregas más partidos */
+            overflow-y: auto !important; /* Habilita barra de desplazamiento nativa */
             background-color: #f9f9f9;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -29,39 +29,194 @@
             padding: 12px;
             box-sizing: border-box;
         }
+        /* Estilos de barra de scroll elegantes para navegadores modernos */
+        .marcador-mundial::-webkit-scrollbar {
+            width: 6px;
+        }
+        .marcador-mundial::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .marcador-mundial::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        .marcador-mundial::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .grupo-titulo {
+            background-color: #1a365d;
+            color: white;
+            font-size: 11px;
+            padding: 3px 6px;
+            font-weight: bold;
+            margin-top: 10px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .match {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 6px 0; 
+            border-bottom: 1px solid #eee;
+        }
+        .team {
+            font-weight: bold; 
+            width: 38%; 
+            font-size: 12px; 
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .score {
+            background-color: #2b6cb0; 
+            color: white; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            font-size: 11px; 
+            min-width: 28px; 
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="marcador-mundial">
-        <h3 style="text-align: center; margin-top: 0; color: #1a365d; font-size: 15px; border-bottom: 2px solid #1a365d; padding-bottom: 6px; margin-bottom: 10px;">Resultados FIFA Mundial 2026</h3>
+        <h3 style="text-align: center; margin-top: 0; color: #1a365d; font-size: 14px; border-bottom: 2px solid #1a365d; padding-bottom: 6px; margin-bottom: 5px;">Resultados FIFA Mundial 2026</h3>
         
-        <!-- Partido 1 -->
-        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
-            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Francia</span>
-            <span style="background-color: #1a365d; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">4 - 1</span>
-            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Noruega</span>
+        <!-- GRUPO A -->
+        <div class="grupo-titulo">Grupo A</div>
+        <div class="match">
+            <span class="team">México</span>
+            <span class="score">2 - 0</span>
+            <span class="team" style="text-align: right;">Sudáfrica</span>
+        </div>
+        <div class="match">
+            <span class="team">Corea Sur</span>
+            <span class="score">2 - 1</span>
+            <span class="team" style="text-align: right;">Rep. Checa</span>
+        </div>
+        <div class="match">
+            <span class="team">Rep. Checa</span>
+            <span class="score">1 - 1</span>
+            <span class="team" style="text-align: right;">Sudáfrica</span>
+        </div>
+        <div class="match">
+            <span class="team">México</span>
+            <span class="score">1 - 0</span>
+            <span class="team" style="text-align: right;">Corea Sur</span>
+        </div>
+        <div class="match">
+            <span class="team">México</span>
+            <span class="score">3 - 0</span>
+            <span class="team" style="text-align: right;">Rep. Checa</span>
+        </div>
+        <div class="match">
+            <span class="team">Sudáfrica</span>
+            <span class="score">1 - 0</span>
+            <span class="team" style="text-align: right;">Corea Sur</span>
         </div>
 
-        <!-- Partido 2 -->
-        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
-            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Senegal</span>
-            <span style="background-color: #1a365d; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">5 - 0</span>
-            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Irak</span>
+        <!-- GRUPO B -->
+        <div class="grupo-titulo">Grupo B</div>
+        <div class="match">
+            <span class="team">Canadá</span>
+            <span class="score">1 - 1</span>
+            <span class="team" style="text-align: right;">Bosnia</span>
+        </div>
+        <div class="match">
+            <span class="team">Suiza</span>
+            <span class="score">1 - 1</span>
+            <span class="team" style="text-align: right;">Catar</span>
+        </div>
+        <div class="match">
+            <span class="team">Suiza</span>
+            <span class="score">4 - 1</span>
+            <span class="team" style="text-align: right;">Bosnia</span>
+        </div>
+        <div class="match">
+            <span class="team">Canadá</span>
+            <span class="score">6 - 0</span>
+            <span class="team" style="text-align: right;">Catar</span>
+        </div>
+        <div class="match">
+            <span class="team">Suiza</span>
+            <span class="score">3 - 1</span>
+            <span class="team" style="text-align: right;">Canadá</span>
+        </div>
+        <div class="match">
+            <span class="team">Bosnia</span>
+            <span class="score">3 - 1</span>
+            <span class="team" style="text-align: right;">Catar</span>
         </div>
 
-        <!-- Partido 3 -->
-        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
-            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Turquía</span>
-            <span style="background-color: #718096; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">3 - 2</span>
-            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">EE. UU.</span>
+        <!-- GRUPO C -->
+        <div class="grupo-titulo">Grupo C</div>
+        <div class="match">
+            <span class="team">Brasil</span>
+            <span class="score">1 - 1</span>
+            <span class="team" style="text-align: right;">Marruecos</span>
+        </div>
+        <div class="match">
+            <span class="team">Escocia</span>
+            <span class="score">1 - 0</span>
+            <span class="team" style="text-align: right;">Haití</span>
+        </div>
+        <div class="match">
+            <span class="team">Escocia</span>
+            <span class="score">0 - 1</span>
+            <span class="team" style="text-align: right;">Marruecos</span>
+        </div>
+        <div class="match">
+            <span class="team">Brasil</span>
+            <span class="score">3 - 0</span>
+            <span class="team" style="text-align: right;">Haití</span>
+        </div>
+        <div class="match">
+            <span class="team">Escocia</span>
+            <span class="score">0 - 3</span>
+            <span class="team" style="text-align: right;">Brasil</span>
+        </div>
+        <div class="match">
+            <span class="team">Marruecos</span>
+            <span class="score">4 - 2</span>
+            <span class="team" style="text-align: right;">Haití</span>
         </div>
 
-        <!-- Partido 4 -->
-        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
-            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Paraguay</span>
-            <span style="background-color: #718096; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">0 - 0</span>
-            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Australia</span>
+        <!-- GRUPO D -->
+        <div class="grupo-titulo">Grupo D</div>
+        <div class="match">
+            <span class="team">EE. UU.</span>
+            <span class="score">4 - 1</span>
+            <span class="team" style="text-align: right;">Paraguay</span>
+        </div>
+        <div class="match">
+            <span class="team">Australia</span>
+            <span class="score">2 - 0</span>
+            <span class="team" style="text-align: right;">Turquía</span>
+        </div>
+        <div class="match">
+            <span class="team">EE. UU.</span>
+            <span class="score">2 - 0</span>
+            <span class="team" style="text-align: right;">Australia</span>
+        </div>
+        <div class="match">
+            <span class="team">Turquía</span>
+            <span class="score">0 - 1</span>
+            <span class="team" style="text-align: right;">Paraguay</span>
+        </div>
+        <div class="match">
+            <span class="team">Turquía</span>
+            <span class="score">3 - 2</span>
+            <span class="team" style="text-align: right;">EE. UU.</span>
+        </div>
+        <div class="match" style="border-bottom: none;">
+            <span class="team">Paraguay</span>
+            <span class="score">0 - 0</span>
+            <span class="team" style="text-align: right;">Australia</span>
         </div>
     </div>
 
