@@ -13,15 +13,15 @@
         }
 
         body {
-            background-color: transparent; /* Fondo transparente para acoplarse a xat */
+            background-color: transparent; /* Transparente para adaptarse al fondo de tu xat */
             display: flex;
-            justify-content: flex-end; /* Alineación total a la derecha */
+            justify-content: flex-end; /* Empuja el marcador totalmente a la derecha */
             min-height: 100vh;
             padding: 10px;
             overflow: hidden;
         }
 
-        /* Contenedor adaptado para la barra lateral derecha de xat */
+        /* Contenedor adaptado como barra lateral para xat.com */
         .sidebar-container {
             width: 290px; 
             height: calc(100vh - 20px);
@@ -82,7 +82,7 @@
             display: inline-block;
         }
 
-        /* Zona con scroll para los partidos */
+        /* Lista de partidos con scroll sutil */
         .match-list {
             display: flex;
             flex-direction: column;
@@ -214,21 +214,20 @@
         </div>
 
         <div class="match-list" id="match-container">
-            <div class="status-msg">Conectando con el archivo de resultados...</div>
+            <div class="status-msg">Sincronizando partidos desde Pastebin...</div>
         </div>
     </div>
 
     <script>
-        // URL DEL ARCHIVO JSON EXTERNO
-        // Reemplaza esta URL de ejemplo por el enlace real donde subas tu archivo JSON
-        const JSON_URL = "https://jsonbin.io"; 
+        // URL segura conectada directamente a tu enlace de Pastebin
+        const JSON_URL = "https://allorigins.win"; 
 
         async function consultarArchivoExterno() {
             try {
-                const respuesta = await fetch(JSON_URL);
+                // Añadimos un parámetro de tiempo para evitar que el navegador guarde una copia vieja en caché
+                const respuesta = await fetch(`${JSON_URL}&nocache=${new Date().getTime()}`);
                 const datos = await respuesta.json();
                 
-                // Actualizar el título del torneo desde el JSON si existe
                 document.getElementById("tournament-name").innerText = datos.torneo || "MUNDIAL 2026";
                 
                 const listaPartidos = datos.partidos;
@@ -236,7 +235,7 @@
                 container.innerHTML = ""; 
 
                 if(!listaPartidos || listaPartidos.length === 0){
-                    container.innerHTML = '<div class="status-msg">No hay partidos registrados en el archivo.</div>';
+                    container.innerHTML = '<div class="status-msg">No hay partidos registrados.</div>';
                     return;
                 }
 
@@ -282,16 +281,16 @@
                 });
 
             } catch (error) {
-                console.error("Error al leer el archivo JSON:", error);
-                document.getElementById("match-container").innerHTML = '<div class="status-msg">Error de sincronización con el archivo externo.</div>';
+                console.error("Error al leer Pastebin:", error);
+                document.getElementById("match-container").innerHTML = '<div class="status-msg">Error de conexión. Reintentando...</div>';
             }
         }
 
-        // Carga inicial al abrir la barra
+        // Carga inicial inmediata
         consultarArchivoExterno();
 
-        // Revisa el archivo externo cada 20 segundos para ver si cambiaste un gol o minuto
-        setInterval(consultarArchivoExterno, 20000);
+        // El marcador lee tu Pastebin automáticamente cada 25 segundos para traer los nuevos goles
+        setInterval(consultarArchivoExterno, 25000);
     </script>
 </body>
 </html>
