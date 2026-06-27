@@ -11,32 +11,58 @@
             overflow: auto !important; 
             background: transparent;
         }
-        /* Contenedor principal posicionado en Jaquemate */
+        /* Contenedor principal posicionado a la derecha fija */
         .marcador-mundial {
-            position: absolute;
+            position: fixed; /* Se mantiene visible al hacer scroll en la página principal */
             right: 15px; 
             top: 65px;
             width: 280px;
-            height: 500px;
+            max-height: 500px;
             z-index: 9999;
-            /* CAMBIO CRÍTICO: Obliga al navegador a priorizar los clics aquí */
             pointer-events: auto !important; 
-        }
-        /* Forzado de scroll nativo sobre el iframe */
-        .marcador-mundial iframe {
-            width: 100%;
-            height: 100%;
-            /* CAMBIO CRÍTICO: Habilita el desplazamiento táctil y de rueda en navegadores web */
-            overflow-y: scroll !important;
-            -webkit-overflow-scrolling: touch !important;
+            overflow-y: auto !important; /* Habilita el scroll interno si agregas más partidos */
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            padding: 12px;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
 
     <div class="marcador-mundial">
-        <!-- AQUÍ ESTÁ TU CÓDIGO DE SCOREMER -->
-        <iframe src='https://scoremer.com' frameborder='0'></iframe>
+        <h3 style="text-align: center; margin-top: 0; color: #1a365d; font-size: 15px; border-bottom: 2px solid #1a365d; padding-bottom: 6px; margin-bottom: 10px;">Resultados FIFA Mundial 2026</h3>
+        
+        <!-- Partido 1 -->
+        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
+            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Francia</span>
+            <span style="background-color: #1a365d; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">4 - 1</span>
+            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Noruega</span>
+        </div>
+
+        <!-- Partido 2 -->
+        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
+            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Senegal</span>
+            <span style="background-color: #1a365d; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">5 - 0</span>
+            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Irak</span>
+        </div>
+
+        <!-- Partido 3 -->
+        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee;">
+            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Turquía</span>
+            <span style="background-color: #718096; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">3 - 2</span>
+            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">EE. UU.</span>
+        </div>
+
+        <!-- Partido 4 -->
+        <div class="match" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <span style="font-weight: bold; width: 35%; font-size: 13px; color: #333;">Paraguay</span>
+            <span style="background-color: #718096; color: white; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 12px; min-width: 30px; text-align: center;">0 - 0</span>
+            <span style="font-weight: bold; width: 35%; text-align: right; font-size: 13px; color: #333;">Australia</span>
+        </div>
     </div>
 
 </body>
