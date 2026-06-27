@@ -3,279 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mundial 2026 - Marcador</title>
+    <title>Marcador en Vivo</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            overflow: auto !important; 
-            background: transparent;
+            font-family: 'Arial Narrow', sans-serif;
         }
-        /* Contenedor lateral derecho */
-        .marcador-mundial {
-            position: fixed; 
-            right: 15px; 
-            top: 65px;
-            width: 280px;
-            height: 500px;
-            z-index: 9999;
-            pointer-events: auto !important; 
-            background-color: #051911; /* Verde oscuro idéntico a la imagen */
-            border: 1px solid #133827;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            font-family: Arial, sans-serif;
-            padding: 10px;
-            box-sizing: border-box;
+
+        body {
+            background-color: #121212;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        /* Pestañas superiores de navegación */
-        .tabs-container {
+
+        /* Contenedor Principal estilo Teléfono */
+        .phone-container {
+            width: 100%;
+            max-width: 360px;
+            background-color: #061c12;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #1a3327;
+        }
+
+        /* Pestañas Superiores */
+        .tabs {
             display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-            pointer-events: auto !important;
+            gap: 10px;
+            margin-bottom: 16px;
         }
-        .tab-btn {
+
+        .tab {
             flex: 1;
-            padding: 10px 8px;
+            padding: 10px;
+            border-radius: 10px;
             border: none;
-            border-radius: 6px;
-            font-size: 11px;
             font-weight: bold;
+            font-size: 14px;
             text-transform: uppercase;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            pointer-events: auto !important;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-        
-        /* Clases de estado dinámico para CSS */
-        .tab-btn.active {
-            background-color: #00a86b !important;
-            color: #ffffff !important;
-        }
-        .tab-btn.inactive {
-            background-color: #0b2218 !important;
-            color: #4b6b5b !important;
+            gap: 6px;
         }
 
-        /* Contenedor de lista con scroll */
-        .matches-list {
-            overflow-y: auto !important;
-            flex-grow: 1;
-            padding-right: 2px;
+        .tab.active {
+            background-color: #0e5e43;
+            color: #ffffff;
         }
-        .matches-list::-webkit-scrollbar {
-            width: 4px;
+
+        .tab.inactive {
+            background-color: #162a21;
+            color: #7b8e85;
         }
-        .matches-list::-webkit-scrollbar-thumb {
-            background: #1a4231;
-            border-radius: 4px;
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff3333;
+            border-radius: 50%;
+            display: inline-block;
         }
-        /* Bloque de partido */
-        .match-card {
-            background-color: #091f15;
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #112e21;
-        }
-        .match-row {
+
+        /* Contenedor de Lista de Partidos */
+        .match-list {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
         }
-        .team-box {
+
+        /* Tarjeta de Partido */
+        .match-card {
+            background-color: #04140d;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #11281c;
+        }
+
+        /* Estilo especial cuando el partido está EN VIVO */
+        .match-card.live-border {
+            border: 1px solid #b32424;
+        }
+
+        /* Fila Principal de Equipos y Marcador */
+        .match-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        /* Bloques de Equipos */
+        .team {
             display: flex;
             align-items: center;
             gap: 8px;
-            width: 38%;
+            width: 35%;
         }
-        .team-box.right {
-            justify-content: flex-end;
+
+        .team.home { justify-content: flex-start; }
+        .team.away { justify-content: flex-end; flex-row-reverse: row; }
+
+        .flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #222;
         }
-        .flag-emoji {
-            font-size: 20px;
-            line-height: 1;
-        }
+
         .team-name {
-            color: white;
-            font-size: 13px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Centro: Goles y Tiempo */
+        .score-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .score-live { color: #ff3333; }
+        .score-final { color: #ffd700; }
+
+        .time-status {
+            font-size: 11px;
+            margin-top: 2px;
             font-weight: bold;
         }
-        .score-box {
-            font-size: 16px;
-            font-weight: bold;
-            min-width: 45px;
-            text-align: center;
+        .time-status.live-time { color: #ff3333; }
+        .time-status.final-time { color: #7b8e85; }
+
+        /* Etiquetas Inferiores de la Tarjeta */
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
         }
-        .score-live {
-            color: #ff3b30;
-        }
-        .score-final {
-            color: #ffd214;
-        }
-        .score-vs {
-            color: #8fa399;
-            font-size: 12px;
-        }
-        /* Etiquetas de estado */
-        .status-badge {
-            display: inline-block;
-            font-size: 9px;
+
+        .badge {
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
-            padding: 2px 10px;
+            padding: 3px 10px;
             border-radius: 12px;
-            margin-top: 6px;
         }
-        .badge-live {
-            background-color: #ff3b30;
+
+        .badge.live {
+            background-color: #ff3333;
             color: white;
-            animation: pulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        .badge-final {
-            background-color: #1a1e12;
-            color: #ffd214;
-            border: 1px solid #383411;
+
+        .badge.final {
+            background-color: #ffd700;
+            color: #000000;
         }
-        .badge-time {
-            background-color: #172a21;
-            color: #8fa399;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+
+        /* Mensaje de Carga / Sin Partidos */
+        .status-msg {
+            color: #7b8e85;
+            text-align: center;
+            font-size: 14px;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="marcador-mundial">
-        <!-- Pestañas de navegación interactiva con selectores ID claros -->
-        <div class="tabs-container">
-            <button class="tab-btn active" id="tab-vivo">🔴 En Vivo</button>
-            <button class="tab-btn inactive" id="tab-proximos">📅 Próximos</button>
+    <div class="phone-container">
+        <!-- Pestañas superiores fijas -->
+        <div class="tabs">
+            <button class="tab active"><span class="dot"></span> En Vivo</button>
+            <button class="tab inactive">Próximos</button>
         </div>
+
+        <!-- Espacio donde se cargarán los partidos dinámicamente -->
+        <div class="match-list" id="match-container">
+            <div class="status-msg">Cargando partidos de hoy...</div>
+        </div>
+    </div>
+
+    <script>
+        // Usamos una API pública y libre de fútbol para obtener resultados reales
+        const API_URL = "https://api-sports.io";
         
-        <div class="matches-list">
-            <!-- PARTIDOS EN VIVO -->
-            <div class="match-card" data-type="vivo" style="border-left: 3px solid #ff3b30;">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇺🇾</span>
-                        <span class="team-name">URU</span>
-                    </div>
-                    <div class="score-box score-live">0 : 1</div>
-                    <div class="team-box right">
-                        <span class="team-name">ESP</span>
-                        <span class="flag-emoji">🇪🇸</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
-            </div>
+        // NOTA: Para producción debes registrar tu propia API Key gratuita en api-sports.io
+        // Esta es una key de prueba pública de la comunidad que podría expirar.
+        const API_KEY = "3cd7f1837a7f45c2ec4df646903f07a7"; 
 
-            <div class="match-card" data-type="vivo" style="border-left: 3px solid #ff3b30;">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇨🇻</span>
-                        <span class="team-name">CPV</span>
-                    </div>
-                    <div class="score-box score-live">0 : 0</div>
-                    <div class="team-box right">
-                        <span class="team-name">KSA</span>
-                        <span class="flag-emoji">🇸🇦</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
-            </div>
+        async function fetchScores() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: "GET",
+                    headers: {
+                        "x-rapidapi-host": "v3.football.api-sports.io",
+                        "x-rapidapi-key": API_KEY
+                    }
+                });
 
-            <!-- PARTIDOS FINALIZADOS -->
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇳🇴</span>
-                        <span class="team-name">NOR</span>
-                    </div>
-                    <div class="score-box score-final">1 : 4</div>
-                    <div class="team-box right">
-                        <span class="team-name">FRA</span>
-                        <span class="flag-emoji">🇫🇷</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-final">Final</span></center>
-            </div>
+                const data = await response.json();
+                const fixtures = data.response;
+                const container = document.getElementById("match-container");
+                
+                container.innerHTML = ""; // Limpiar contenedor
 
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇸🇳</span>
-                        <span class="team-name">SEN</span>
-                    </div>
-                    <div class="score-box score-final">5 : 0</div>
-                    <div class="team-box right">
-                        <span class="team-name">IRQ</span>
-                        <span class="flag-emoji">🇮🇶</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-final">Final</span></center>
-            </div>
+                if (!fixtures || fixtures.length === 0) {
+                    container.innerHTML = '<div class="status-msg">No hay partidos en vivo en este momento.</div>';
+                    return;
+                }
 
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇹🇷</span>
-                        <span class="team-name">TUR</span>
-                    </div>
-                    <div class="score-box score-final">3 : 2</div>
-                    <div class="team-box right">
-                        <span class="team-name">USA</span>
-                        <span class="flag-emoji">🇺🇸</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-final">Final</span></center>
-            </div>
+                // Generar cada tarjeta de partido dinámicamente
+                fixtures.slice(0, 8).forEach(match => {
+                    const homeTeam = match.teams.home.name.substring(0, 3).toUpperCase();
+                    const awayTeam = match.teams.away.name.substring(0, 3).toUpperCase();
+                    const homeFlag = match.teams.home.logo;
+                    const awayFlag = match.teams.away.logo;
+                    const homeGoals = match.goals.home ?? 0;
+                    const awayGoals = match.goals.away ?? 0;
+                    
+                    const statusCode = match.fixture.status.short; // '1H', '2H', 'FT', etc.
+                    const elapsed = match.fixture.status.elapsed;
 
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇵🇾</span>
-                        <span class="team-name">PAR</span>
-                    </div>
-                    <div class="score-box score-final">0 : 0</div>
-                    <div class="team-box right">
-                        <span class="team-name">AUS</span>
-                        <span class="flag-emoji">🇦🇺</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-final">Final</span></center>
-            </div>
+                    let isLive = ["1H", "2H", "HT", "ET", "P"].includes(statusCode);
+                    let isFinal = ["FT", "AET", "PEN"].includes(statusCode);
 
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇯🇵</span>
-                        <span class="team-name">JPN</span>
-                    </div>
-                    <div class="score-box score-final">1 : 1</div>
-                    <div class="team-box right">
-                        <span class="team-name">SWE</span>
-                        <span class="flag-emoji">🇸🇪</span>
-                    </div>
-                </div>
-                <center><span class="status-badge badge-final">Final</span></center>
-            </div>
+                    // Definir clases visuales según estado de la imagen de referencia
+                    let cardClass = isLive ? "match-card live-border" : "match-card";
+                    let scoreClass = isLive ? "score-live" : (isFinal ? "score-final" : "");
+                    let timeClass = isLive ? "time-status live-time" : "time-status final-time";
+                    
+                    let timeText = isLive ? `${elapsed}'` : (isFinal ? "Final" : "00'");
+                    
+                    let badgeHTML = "";
+                    if (isLive) {
+                        badgeHTML = `<div class="badge-row"><span class="badge live"><span class="dot" style="background:#fff; width:6px; height:6px;"></span> En Vivo</span></div>`;
+                    } else if (isFinal) {
+                        badgeHTML = `<div class="badge-row"><span class="badge final">Final</span></div>`;
+                    }
 
-            <div class="match-card" data-type="vivo">
-                <div class="match-row">
-                    <div class="team-box">
-                        <span class="flag-emoji">🇹🇳</span>
-                        <span class="team-name">TUN</span>
-                    </div>
+                    const cardHTML = `
+                        <div class="${cardClass}">
+                            <div class="match-main">
+                                <div class="team home">
+                                    <img class="flag" src="${homeFlag}" alt="${homeTeam}">
+                                    <span class="team-name">${homeTeam}</span>
+                                </div>
+                                <div class="score-center">
+                                    <div class="score-row ${scoreClass}">
+                                        <span>${homeGoals}</span>
+                                        <span style="font-size:18px; margin: 0 4px; color:#7b8e85;">:</span>
+                                        <span>${awayGoals}</span>
+                                    </div>
+                                    <span class="${timeClass}">${timeText}</span>
+                                </div>
+                                <div class="team away">
+                                    <span class="team-name">${awayTeam}</span>
+                                    <img class="flag" src="${awayFlag}" alt="${awayTeam}">
+                                </div>
+                            </div>
+                            ${badgeHTML}
+                        </div>
+                    `;
+                    container.innerHTML += cardHTML;
+                });
+
+            } catch (error) {
+                console.error("Error cargando la API:", error);
