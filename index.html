@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador Lateral Derecho xat</title>
+    <title>Marcador Lateral Interactivo xat</title>
     <style>
-        /* Forzar la alineación hacia la derecha */
         body {
             background-color: transparent;
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -13,14 +12,13 @@
             padding: 5px;
             box-sizing: border-box;
             display: flex;
-            justify-content: flex-end; /* Mueve todo el contenido a la derecha */
+            justify-content: flex-end; 
             width: 100%;
         }
 
-        /* Contenedor con la medida exacta para el lateral de xat */
         .marcador-lateral {
             background-color: #041a12;
-            width: 300px; /* Ancho fijo ideal para la barra de xat */
+            width: 300px; 
             border-radius: 12px;
             padding: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
@@ -28,7 +26,6 @@
             box-sizing: border-box;
         }
 
-        /* Pestañas de Filtros */
         .pestanas-mini {
             display: flex;
             gap: 6px;
@@ -44,6 +41,7 @@
             font-size: 11px;
             cursor: pointer;
             text-align: center;
+            transition: background 0.2s;
         }
 
         .btn-mini.activo {
@@ -56,7 +54,11 @@
             color: #7b978d;
         }
 
-        /* Tarjetas de partidos */
+        /* Clase para ocultar los partidos que no corresponden a la pestaña activa */
+        .oculto {
+            display: none !important;
+        }
+
         .fila-partido {
             background-color: #062318;
             border-radius: 8px;
@@ -73,7 +75,6 @@
             background: linear-gradient(180deg, #0d2119 0%, #170d0f 100%);
         }
 
-        /* Bloques de Equipos */
         .equipo-caja {
             display: flex;
             align-items: center;
@@ -92,7 +93,6 @@
             display: inline-block;
         }
 
-        /* Sección del Marcador Central */
         .score-caja {
             width: 30%;
             text-align: center;
@@ -109,6 +109,7 @@
 
         .num-goles.rojo { color: #ff3b30; }
         .num-goles.amarillo { color: #e2b93b; }
+        .num-goles.gris { color: #7b978d; }
 
         .tiempo-min {
             font-size: 9px;
@@ -117,7 +118,6 @@
         }
         .tiempo-min.rojo { color: #ff3b30; }
 
-        /* Etiquetas */
         .tag-estado {
             font-size: 8px;
             font-weight: bold;
@@ -137,68 +137,140 @@
             color: #e2b93b;
             border: 1px solid #2e4a2e;
         }
+
+        .tag-estado.prog {
+            background-color: #122b22;
+            color: #7b978d;
+            border: 1px solid #1c3d31;
+        }
     </style>
 </head>
 <body>
 
     <div class="marcador-lateral">
         
+        <!-- Botones con IDs para controlar el clic -->
         <div class="pestanas-mini">
-            <button class="btn-mini activo">🔴 EN VIVO</button>
-            <button class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
+            <button id="btn-envivo" class="btn-mini activo">🔴 EN VIVO</button>
+            <button id="btn-proximos" class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
         </div>
 
-        <!-- Partido 1 -->
-        <div class="fila-partido en-vivo">
-            <div class="equipo-caja local">
-                <span class="bandera-icono">🇪🇬</span>
-                <span>EGY</span>
+        <!-- SECCIÓN: PARTIDOS EN VIVO / FINALIZADOS -->
+        <div id="contenedor-envivo">
+            <!-- Partido en vivo 1 -->
+            <div class="fila-partido en-vivo">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇪🇬</span>
+                    <span>EGY</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles rojo">1 : 1</div>
+                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tag-estado vivo">Vivo</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>IRN</span>
+                    <span class="bandera-icono">🇮🇷</span>
+                </div>
             </div>
-            <div class="score-caja">
-                <div class="num-goles rojo">1 : 1</div>
-                <div class="tiempo-min rojo">3T</div>
-                <div class="tag-estado vivo">Vivo</div>
+
+            <!-- Partido en vivo 2 -->
+            <div class="fila-partido en-vivo">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇳🇿</span>
+                    <span>NZL</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles rojo">0 : 1</div>
+                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tag-estado vivo">Vivo</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>BEL</span>
+                    <span class="bandera-icono">🇧🇪</span>
+                </div>
             </div>
-            <div class="equipo-caja visitante">
-                <span>IRN</span>
-                <span class="bandera-icono">🇮🇷</span>
+
+            <!-- Partido Finalizado -->
+            <div class="fila-partido">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇺🇾</span>
+                    <span>URU</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles amarillo">0 : 1</div>
+                    <div class="tag-estado fin">Final</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>ESP</span>
+                    <span class="bandera-icono">🇪🇸</span>
+                </div>
             </div>
         </div>
 
-        <!-- Partido 2 -->
-        <div class="fila-partido en-vivo">
-            <div class="equipo-caja local">
-                <span class="bandera-icono">🇳🇿</span>
-                <span>NZL</span>
-            </div>
-            <div class="score-caja">
-                <div class="num-goles rojo">0 : 1</div>
-                <div class="tiempo-min rojo">3T</div>
-                <div class="tag-estado vivo">Vivo</div>
-            </div>
-            <div class="equipo-caja visitante">
-                <span>BEL</span>
-                <span class="bandera-icono">🇧🇪</span>
-            </div>
-        </div>
 
-        <!-- Partido 3 -->
-        <div class="fila-partido">
-            <div class="equipo-caja local">
-                <span class="bandera-icono">🇺🇾</span>
-                <span>URU</span>
+        <!-- SECCIÓN: PRÓXIMOS PARTIDOS (Oculta por defecto) -->
+        <div id="contenedor-proximos" class="oculto">
+            <!-- Próximo Partido 1 -->
+            <div class="fila-partido">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇲🇽</span>
+                    <span>MEX</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles gris">vs</div>
+                    <div class="tiempo-min" style="color:#7b978d;">20:00</div>
+                    <div class="tag-estado prog">Mañana</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>ARG</span>
+                    <span class="bandera-icono">🇦🇷</span>
+                </div>
             </div>
-            <div class="score-caja">
-                <div class="num-goles amarillo">0 : 1</div>
-                <div class="tag-estado fin">Final</div>
-            </div>
-            <div class="equipo-caja visitante">
-                <span>ESP</span>
-                <span class="bandera-icono">🇪🇸</span>
+
+            <!-- Próximo Partido 2 -->
+            <div class="fila-partido">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇧🇷</span>
+                    <span>BRA</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles gris">vs</div>
+                    <div class="tiempo-min" style="color:#7b978d;">15:30</div>
+                    <div class="tag-estado prog">28 Jun</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>GER</span>
+                    <span class="bandera-icono">🇩🇪</span>
+                </div>
             </div>
         </div>
 
     </div>
+
+    <!-- LOGICA EN JAVASCRIPT PARA HACER CLIC -->
+    <script>
+        const btnEnVivo = document.getElementById('btn-envivo');
+        const btnProximos = document.getElementById('btn-proximos');
+        const listaEnVivo = document.getElementById('contenedor-envivo');
+        const listaProximos = document.getElementById('contenedor-proximos');
+
+        // Al hacer clic en el botón EN VIVO
+        btnEnVivo.addEventListener('click', () => {
+            btnEnVivo.className = 'btn-mini activo';
+            btnProximos.className = 'btn-mini inactivo';
+            listaEnVivo.classList.remove('oculto');
+            listaProximos.classList.add('oculto');
+        });
+
+        // Al hacer clic en el botón PROXIMOS
+        btnProximos.addEventListener('click', () => {
+            btnProximos.className = 'btn-mini activo';
+            btnEnVivo.className = 'btn-mini inactivo';
+            listaProximos.classList.remove('oculto');
+            listaEnVivo.classList.add('oculto');
+        });
+    </script>
 
 </body>
 </html>
