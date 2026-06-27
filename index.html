@@ -1,58 +1,74 @@
-<div style="width: 320px; font-family: Arial, sans-serif; background-color: #0b1a13; border: 2px solid #1a3a2b; border-radius: 15px; padding: 10px; color: #ffffff; box-sizing: border-box; float: right; margin-left: 10px;">
-    
-    <!-- Pestañas Superiores -->
-    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-        <div style="flex: 1; background-color: #122b1e; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; border: 1px solid #1e4631; color: #ff4d4d; margin-right: 5px;">
-            🔴 EN VIVO
-        </div>
-        <div style="flex: 1; background-color: #1a3a2b; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; color: #a0a0a0; margin-left: 5px;">
-            📅 PRÓXIMOS
-        </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Widget Mundial Live</title>
+    <style>
+        body { margin: 0; background: transparent; overflow: hidden; }
+        .score-container { width: 320px; font-family: Arial, sans-serif; background-color: #0b1a13; border: 2px solid #1a3a2b; border-radius: 15px; padding: 10px; color: #ffffff; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .tab-live { flex: 1; background-color: #122b1e; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; border: 1px solid #1e4631; color: #ff4d4d; margin-right: 5px; }
+        .tab-next { flex: 1; background-color: #1a3a2b; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; color: #a0a0a0; margin-left: 5px; }
+        .match-list { display: flex; flex-direction: column; gap: 8px; }
+        .match-card { background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324; }
+        .match-row { display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold; }
+        .team-home { display: flex; align-items: center; gap: 5px; width: 35%; }
+        .score { font-size: 16px; color: #ffcc00; text-align: center; width: 30%; }
+        .team-away { display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%; }
+        .status { background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="score-container">
+    <div class="header">
+        <div class="tab-live">🔴 EN VIVO</div>
+        <div class="tab-next">📅 PRÓXIMOS</div>
     </div>
-
-    <!-- Contenedor de Partidos -->
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-
-        <!-- Partido 1 -->
-        <div style="background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324;">
-            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold;">
-                <span style="display: flex; align-items: center; gap: 5px; width: 35%;">🇺🇾 URU</span>
-                <span style="font-size: 16px; color: #ffcc00; text-align: center; width: 30%;">0 : 1</span>
-                <span style="display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%;">ESP 🇪🇸</span>
-            </div>
-            <div style="background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold;">Final</div>
-        </div>
-
-        <!-- Partido 2 -->
-        <div style="background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324;">
-            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold;">
-                <span style="display: flex; align-items: center; gap: 5px; width: 35%;">🇨🇻 CPV</span>
-                <span style="font-size: 16px; color: #ffcc00; text-align: center; width: 30%;">0 : 0</span>
-                <span style="display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%;">KSA 🇸🇦</span>
-            </div>
-            <div style="background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold;">Final</div>
-        </div>
-
-        <!-- Partido 3 -->
-        <div style="background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324;">
-            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold;">
-                <span style="display: flex; align-items: center; gap: 5px; width: 35%;">🇳🇴 NOR</span>
-                <span style="font-size: 16px; color: #ffcc00; text-align: center; width: 30%;">1 : 4</span>
-                <span style="display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%;">FRA 🇫🇷</span>
-            </div>
-            <div style="background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold;">Final</div>
-        </div>
-
-        <!-- Partido 4 -->
-        <div style="background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324;">
-            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold;">
-                <span style="display: flex; align-items: center; gap: 5px; width: 35%;">🇸🇳 SEN</span>
-                <span style="font-size: 16px; color: #ffcc00; text-align: center; width: 30%;">5 : 0</span>
-                <span style="display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%;">IRQ 🇮🇶</span>
-            </div>
-            <div style="background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold;">Final</div>
-        </div>
-
+    <div class="match-list" id="partidos-mundial">
+        <!-- Cargando datos... -->
     </div>
 </div>
-<div style="clear: both;"></div>
+
+<script>
+    // Conexión simulada a un origen de datos del Mundial
+    async function actualizarMarcador() {
+        try {
+            // Reemplaza esta URL con el endpoint de tu API contratada (ej. FootyStats o Sportmonks)
+            // const response = await fetch('TU_API_URL_MUNDIAL');
+            // const data = await response.json();
+            
+            // Simulación en tiempo real estructurada
+            const partidosSimulados = [
+                { home: "🇺🇾 URU", score: "0 : 1", away: "ESP 🇪🇸", status: "Final" },
+                { home: "🇳🇴 NOR", score: "1 : 4", away: "FRA 🇫🇷", status: "Final" },
+                { home: "🇺🇸 USA", score: "2 : 3", away: "TUR 🇹🇷", status: "En Vivo" }
+            ];
+
+            const contenedor = document.getElementById('partidos-mundial');
+            contenedor.innerHTML = '';
+
+            partidosSimulados.forEach(partido => {
+                contenedor.innerHTML += `
+                    <div class="match-card">
+                        <div class="match-row">
+                            <span class="team-home">${partido.home}</span>
+                            <span class="score">${partido.score}</span>
+                            <span class="team-away">${partido.away}</span>
+                        </div>
+                        <div class="status" style="${partido.status === 'En Vivo' ? 'background-color:#990000; color:#fff;' : ''}">${partido.status}</div>
+                    </div>
+                `;
+            });
+        } catch (error) {
+            console.error("Error cargando los goles del Mundial", error);
+        }
+    }
+
+    // Actualiza los resultados automáticamente cada 60 segundos
+    setInterval(actualizarMarcador, 60000);
+    actualizarMarcador();
+</script>
+
+</body>
+</html>
