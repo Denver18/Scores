@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador Lateral Medidas Exactas</title>
+    <title>Marcador Oficial FIFA 2026</title>
     <style>
         body {
             background-color: transparent;
@@ -12,16 +12,16 @@
             padding: 5px;
             box-sizing: border-box;
             display: flex;
-            justify-content: flex-end; /* Alineado al lado derecho */
+            justify-content: flex-end; 
             width: 100%;
         }
 
         /* MEDIDAS EXACTAS BASADAS EN TU IMAGEN */
         .marcador-lateral {
             background-color: #041a12;
-            width: 340px;          /* Ancho exacto proporcionado */
-            height: 580px;         /* Altura alargada de la imagen */
-            border-radius: 20px;   /* Esquinas bien redondeadas como tu captura */
+            width: 340px;          
+            height: 580px;         
+            border-radius: 20px;   
             padding: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
             border: 2px solid #0d3a2a;
@@ -30,14 +30,12 @@
             flex-direction: column;
         }
 
-        /* Contenedor interno para permitir scroll si se acumulan muchos partidos */
         .lista-partidos-scroll {
             flex: 1;
             overflow-y: auto;
             padding-right: 2px;
         }
 
-        /* Ocultar barra de scroll para mantener diseño limpio */
         .lista-partidos-scroll::-webkit-scrollbar {
             width: 0px;
         }
@@ -74,7 +72,6 @@
             display: none !important;
         }
 
-        /* Estructura de las filas idéntica a tu imagen */
         .fila-partido {
             background-color: #062318;
             border-radius: 12px;
@@ -171,8 +168,11 @@
         </div>
 
         <div class="lista-partidos-scroll">
-            <!-- SECCIÓN: EN VIVO -->
+            
+            <!-- SECCIÓN: EN VIVO / RESULTADOS JORNADA VIERNES 26 JUNIO -->
             <div id="contenedor-envivo">
+                
+                <!-- Grupo G -->
                 <div class="fila-partido en-vivo">
                     <div class="equipo-caja local">
                         <span class="bandera-icono">🇪🇬</span>
@@ -181,7 +181,7 @@
                     <div class="score-caja">
                         <div class="num-goles rojo">1 : 1</div>
                         <div class="tiempo-min rojo">3T</div>
-                        <div class="tag-estado vivo">En Vivo</div>
+                        <div class="tag-estado vivo">Vivo</div>
                     </div>
                     <div class="equipo-caja visitante">
                         <span>IRN</span>
@@ -189,6 +189,7 @@
                     </div>
                 </div>
 
+                <!-- Grupo G -->
                 <div class="fila-partido en-vivo">
                     <div class="equipo-caja local">
                         <span class="bandera-icono">🇳🇿</span>
@@ -197,7 +198,7 @@
                     <div class="score-caja">
                         <div class="num-goles rojo">0 : 1</div>
                         <div class="tiempo-min rojo">3T</div>
-                        <div class="tag-estado vivo">En Vivo</div>
+                        <div class="tag-estado vivo">Vivo</div>
                     </div>
                     <div class="equipo-caja visitante">
                         <span>BEL</span>
@@ -205,6 +206,7 @@
                     </div>
                 </div>
 
+                <!-- Grupo H -->
                 <div class="fila-partido">
                     <div class="equipo-caja local">
                         <span class="bandera-icono">🇺🇾</span>
@@ -220,6 +222,7 @@
                     </div>
                 </div>
 
+                <!-- Grupo H -->
                 <div class="fila-partido">
                     <div class="equipo-caja local">
                         <span class="bandera-icono">🇨🇻</span>
@@ -236,24 +239,61 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN: PRÓXIMOS -->
+            <!-- SECCIÓN: PRÓXIMOS PARTIDOS (SÁBADO 27 JUNIO - SEGÚN FIXTURE DE TU ENLACE) -->
             <div id="contenedor-proximos" class="oculto">
+                
+                <!-- Grupo J -->
                 <div class="fila-partido">
                     <div class="equipo-caja local">
-                        <span class="bandera-icono">🇵🇦</span>
-                        <span>PAN</span>
+                        <span class="bandera-icono">🇩🇿</span>
+                        <span>ALG</span>
                     </div>
                     <div class="score-caja">
                         <div class="num-goles gris">vs</div>
-                        <div class="tiempo-min" style="color:#7b978d;">16:00</div>
-                        <div class="tag-estado prog">Grupo L</div>
+                        <div class="tiempo-min" style="color:#7b978d;">15:00</div>
+                        <div class="tag-estado prog">Grupo J</div>
                     </div>
                     <div class="equipo-caja visitante">
-                        <span>ENG</span>
-                        <span class="bandera-icono">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                        <span>AUT</span>
+                        <span class="bandera-icono">AUT</span>
                     </div>
                 </div>
 
+                <!-- Grupo J -->
+                <div class="fila-partido">
+                    <div class="equipo-caja local">
+                        <span class="bandera-icono">🇯🇴</span>
+                        <span>JOR</span>
+                    </div>
+                    <div class="score-caja">
+                        <div class="num-goles gris">vs</div>
+                        <div class="tiempo-min" style="color:#7b978d;">15:00</div>
+                        <div class="tag-estado prog">Grupo J</div>
+                    </div>
+                    <div class="equipo-caja visitante">
+                        <span>ARG</span>
+                        <span class="bandera-icono">🇦🇷</span>
+                    </div>
+                </div>
+
+                <!-- Grupo K -->
+                <div class="fila-partido">
+                    <div class="equipo-caja local">
+                        <span class="bandera-icono">🇨🇩</span>
+                        <span>COD</span>
+                    </div>
+                    <div class="score-caja">
+                        <div class="num-goles gris">vs</div>
+                        <div class="tiempo-min" style="color:#7b978d;">18:00</div>
+                        <div class="tag-estado prog">Grupo K</div>
+                    </div>
+                    <div class="equipo-caja visitante">
+                        <span>UZB</span>
+                        <span class="bandera-icono">UZB</span>
+                    </div>
+                </div>
+
+                <!-- Grupo K -->
                 <div class="fila-partido">
                     <div class="equipo-caja local">
                         <span class="bandera-icono">🇨🇴</span>
@@ -261,14 +301,49 @@
                     </div>
                     <div class="score-caja">
                         <div class="num-goles gris">vs</div>
-                        <div class="tiempo-min" style="color:#7b978d;">18:30</div>
+                        <div class="tiempo-min" style="color:#7b978d;">18:00</div>
                         <div class="tag-estado prog">Grupo K</div>
                     </div>
                     <div class="equipo-caja visitante">
                         <span>POR</span>
-                        <span class="bandera-icono">🇵🇹</span>
+                        <span class="bandera-icono">POR</span>
                     </div>
                 </div>
+
+                <!-- Grupo L -->
+                <div class="fila-partido">
+                    <div class="equipo-caja local">
+                        <span class="bandera-icono">🇭🇷</span>
+                        <span>CRO</span>
+                    </div>
+                    <div class="score-caja">
+                        <div class="num-goles gris">vs</div>
+                        <div class="tiempo-min" style="color:#7b978d;">21:00</div>
+                        <div class="tag-estado prog">Grupo L</div>
+                    </div>
+                    <div class="equipo-caja visitante">
+                        <span>GHA</span>
+                        <span class="bandera-icono">GHA</span>
+                    </div>
+                </div>
+
+                <!-- Grupo L -->
+                <div class="fila-partido">
+                    <div class="equipo-caja local">
+                        <span class="bandera-icono">🇵🇦</span>
+                        <span>PAN</span>
+                    </div>
+                    <div class="score-caja">
+                        <div class="num-goles gris">vs</div>
+                        <div class="tiempo-min" style="color:#7b978d;">21:00</div>
+                        <div class="tag-estado prog">Grupo L</div>
+                    </div>
+                    <div class="equipo-caja visitante">
+                        <span>ENG</span>
+                        <span class="bandera-icono">ENG</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
