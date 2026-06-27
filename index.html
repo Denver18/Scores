@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mundial 2026</title>
+    <title>Mundial 2026 - Marcador</title>
     <style>
         body {
             margin: 0;
@@ -11,7 +11,7 @@
             overflow: auto !important; 
             background: transparent;
         }
-        /* Contenedor principal posicionado a la derecha fija */
+        /* Contenedor lateral derecho */
         .marcador-mundial {
             position: fixed; 
             right: 15px; 
@@ -20,205 +20,258 @@
             height: 500px;
             z-index: 9999;
             pointer-events: auto !important; 
-            overflow-y: auto !important; /* Habilita barra de desplazamiento nativa */
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: #051911; /* Verde oscuro idéntico a la imagen */
+            border: 1px solid #133827;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             font-family: Arial, sans-serif;
-            padding: 12px;
+            padding: 10px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
-        /* Estilos de barra de scroll elegantes para navegadores modernos */
-        .marcador-mundial::-webkit-scrollbar {
-            width: 6px;
+        /* Pestañas superiores de navegación */
+        .tabs-container {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
         }
-        .marcador-mundial::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        .marcador-mundial::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-        .marcador-mundial::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        .grupo-titulo {
-            background-color: #1a365d;
-            color: white;
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
             font-size: 11px;
-            padding: 3px 6px;
             font-weight: bold;
-            margin-top: 10px;
-            border-radius: 3px;
             text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
-        .match {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 6px 0; 
-            border-bottom: 1px solid #eee;
+        /* Estado activo de las pestañas */
+        .tab-btn.active[data-tab="vivo"] {
+            background-color: #00a86b;
+            color: white;
         }
-        .team {
-            font-weight: bold; 
-            width: 38%; 
-            font-size: 12px; 
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .tab-btn.active[data-tab="proximos"] {
+            background-color: #3b82f6; /* Azul deportivo para próximos */
+            color: white;
         }
-        .score {
-            background-color: #2b6cb0; 
-            color: white; 
-            padding: 2px 6px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            font-size: 11px; 
-            min-width: 28px; 
+        /* Estado inactivo general */
+        .tab-btn:not(.active) {
+            background-color: #172a21;
+            color: #8fa399;
+        }
+        /* Contenedor de lista con scroll */
+        .matches-list {
+            overflow-y: auto !important;
+            flex-grow: 1;
+            padding-right: 2px;
+        }
+        .matches-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .matches-list::-webkit-scrollbar-thumb {
+            background: #1a4231;
+            border-radius: 4px;
+        }
+        /* Bloque de partido */
+        .match-card {
+            background-color: #0b2218;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #112e21;
+            display: none; /* Controlado mediante JS */
+        }
+        /* Mostrar elementos activos */
+        .match-card.show {
+            display: block;
+        }
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .team-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 38%;
+        }
+        .team-box.right {
+            justify-content: flex-end;
+        }
+        .flag {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .team-name {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .score-box {
+            font-size: 15px;
+            font-weight: bold;
+            min-width: 45px;
             text-align: center;
+        }
+        .score-live {
+            color: #ff3b30;
+        }
+        .score-final {
+            color: #ffd214;
+        }
+        .score-vs {
+            color: #8fa399;
+            font-size: 11px;
+        }
+        /* Etiquetas de estado */
+        .status-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 6px;
+        }
+        .badge-live {
+            background-color: #ff3b30;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .badge-final {
+            background-color: #231f13;
+            color: #ffd214;
+            border: 1px solid #473e1c;
+        }
+        .badge-time {
+            background-color: #1c2d3d;
+            color: #60a5fa;
+            border: 1px solid #1e3a8a;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
     <div class="marcador-mundial">
-        <h3 style="text-align: center; margin-top: 0; color: #1a365d; font-size: 14px; border-bottom: 2px solid #1a365d; padding-bottom: 6px; margin-bottom: 5px;">Resultados FIFA Mundial 2026</h3>
+        <!-- Pestañas de navegación interactiva -->
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="vivo">🔴 En Vivo</button>
+            <button class="tab-btn" data-tab="proximos">📅 Próximos</button>
+        </div>
         
-        <!-- GRUPO A -->
-        <div class="grupo-titulo">Grupo A</div>
-        <div class="match">
-            <span class="team">México</span>
-            <span class="score">2 - 0</span>
-            <span class="team" style="text-align: right;">Sudáfrica</span>
-        </div>
-        <div class="match">
-            <span class="team">Corea Sur</span>
-            <span class="score">2 - 1</span>
-            <span class="team" style="text-align: right;">Rep. Checa</span>
-        </div>
-        <div class="match">
-            <span class="team">Rep. Checa</span>
-            <span class="score">1 - 1</span>
-            <span class="team" style="text-align: right;">Sudáfrica</span>
-        </div>
-        <div class="match">
-            <span class="team">México</span>
-            <span class="score">1 - 0</span>
-            <span class="team" style="text-align: right;">Corea Sur</span>
-        </div>
-        <div class="match">
-            <span class="team">México</span>
-            <span class="score">3 - 0</span>
-            <span class="team" style="text-align: right;">Rep. Checa</span>
-        </div>
-        <div class="match">
-            <span class="team">Sudáfrica</span>
-            <span class="score">1 - 0</span>
-            <span class="team" style="text-align: right;">Corea Sur</span>
-        </div>
+        <div class="matches-list">
+            <!-- SECCIÓN: EN VIVO (data-type="vivo") -->
+            <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
+                <div class="match-row">
+                    <div class="team-box">
+                        <img class="flag" src="https://flagcdn.com" alt="URU">
+                        <span class="team-name">URU</span>
+                    </div>
+                    <div class="score-box score-live">0 : 1</div>
+                    <div class="team-box right">
+                        <span class="team-name">ESP</span>
+                        <img class="flag" src="https://flagcdn.com" alt="ESP">
+                    </div>
+                </div>
+                <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
+            </div>
 
-        <!-- GRUPO B -->
-        <div class="grupo-titulo">Grupo B</div>
-        <div class="match">
-            <span class="team">Canadá</span>
-            <span class="score">1 - 1</span>
-            <span class="team" style="text-align: right;">Bosnia</span>
-        </div>
-        <div class="match">
-            <span class="team">Suiza</span>
-            <span class="score">1 - 1</span>
-            <span class="team" style="text-align: right;">Catar</span>
-        </div>
-        <div class="match">
-            <span class="team">Suiza</span>
-            <span class="score">4 - 1</span>
-            <span class="team" style="text-align: right;">Bosnia</span>
-        </div>
-        <div class="match">
-            <span class="team">Canadá</span>
-            <span class="score">6 - 0</span>
-            <span class="team" style="text-align: right;">Catar</span>
-        </div>
-        <div class="match">
-            <span class="team">Suiza</span>
-            <span class="score">3 - 1</span>
-            <span class="team" style="text-align: right;">Canadá</span>
-        </div>
-        <div class="match">
-            <span class="team">Bosnia</span>
-            <span class="score">3 - 1</span>
-            <span class="team" style="text-align: right;">Catar</span>
-        </div>
+            <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
+                <div class="match-row">
+                    <div class="team-box">
+                        <img class="flag" src="https://flagcdn.com" alt="CPV">
+                        <span class="team-name">CPV</span>
+                    </div>
+                    <div class="score-box score-live">0 : 0</div>
+                    <div class="team-box right">
+                        <span class="team-name">KSA</span>
+                        <img class="flag" src="https://flagcdn.com" alt="KSA">
+                    </div>
+                </div>
+                <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
+            </div>
 
-        <!-- GRUPO C -->
-        <div class="grupo-titulo">Grupo C</div>
-        <div class="match">
-            <span class="team">Brasil</span>
-            <span class="score">1 - 1</span>
-            <span class="team" style="text-align: right;">Marruecos</span>
-        </div>
-        <div class="match">
-            <span class="team">Escocia</span>
-            <span class="score">1 - 0</span>
-            <span class="team" style="text-align: right;">Haití</span>
-        </div>
-        <div class="match">
-            <span class="team">Escocia</span>
-            <span class="score">0 - 1</span>
-            <span class="team" style="text-align: right;">Marruecos</span>
-        </div>
-        <div class="match">
-            <span class="team">Brasil</span>
-            <span class="score">3 - 0</span>
-            <span class="team" style="text-align: right;">Haití</span>
-        </div>
-        <div class="match">
-            <span class="team">Escocia</span>
-            <span class="score">0 - 3</span>
-            <span class="team" style="text-align: right;">Brasil</span>
-        </div>
-        <div class="match">
-            <span class="team">Marruecos</span>
-            <span class="score">4 - 2</span>
-            <span class="team" style="text-align: right;">Haití</span>
-        </div>
+            <!-- SECCIÓN: PRÓXIMOS Y TERMINADOS (data-type="proximos") -->
+            <div class="match-card" data-type="proximos">
+                <div class="match-row">
+                    <div class="team-box">
+                        <img class="flag" src="https://flagcdn.com" alt="NOR">
+                        <span class="team-name">NOR</span>
+                    </div>
+                    <div class="score-box score-final">1 : 4</div>
+                    <div class="team-box right">
+                        <span class="team-name">FRA</span>
+                        <img class="flag" src="https://flagcdn.com" alt="FRA">
+                    </div>
+                </div>
+                <center><span class="status-badge badge-final">Finalizado</span></center>
+            </div>
 
-        <!-- GRUPO D -->
-        <div class="grupo-titulo">Grupo D</div>
-        <div class="match">
-            <span class="team">EE. UU.</span>
-            <span class="score">4 - 1</span>
-            <span class="team" style="text-align: right;">Paraguay</span>
-        </div>
-        <div class="match">
-            <span class="team">Australia</span>
-            <span class="score">2 - 0</span>
-            <span class="team" style="text-align: right;">Turquía</span>
-        </div>
-        <div class="match">
-            <span class="team">EE. UU.</span>
-            <span class="score">2 - 0</span>
-            <span class="team" style="text-align: right;">Australia</span>
-        </div>
-        <div class="match">
-            <span class="team">Turquía</span>
-            <span class="score">0 - 1</span>
-            <span class="team" style="text-align: right;">Paraguay</span>
-        </div>
-        <div class="match">
-            <span class="team">Turquía</span>
-            <span class="score">3 - 2</span>
-            <span class="team" style="text-align: right;">EE. UU.</span>
-        </div>
-        <div class="match" style="border-bottom: none;">
-            <span class="team">Paraguay</span>
-            <span class="score">0 - 0</span>
-            <span class="team" style="text-align: right;">Australia</span>
+            <div class="match-card" data-type="proximos">
+                <div class="match-row">
+                    <div class="team-box">
+                        <img class="flag" src="https://flagcdn.com" alt="SEN">
+                        <span class="team-name">SEN</span>
+                    </div>
+                    <div class="score-box score-final">5 : 0</div>
+                    <div class="team-box right">
+                        <span class="team-name">IRQ</span>
+                        <img class="flag" src="https://flagcdn.com" alt="IRQ">
+                    </div>
+                </div>
+                <center><span class="status-badge badge-final">Finalizado</span></center>
+            </div>
+
+            <div class="match-card" data-type="proximos">
+                <div class="match-row">
+                    <div class="team-box">
+                        <img class="flag" src="https://flagcdn.com" alt="ARG">
+                        <span class="team-name">ARG</span>
+                    </div>
+                    <div class="score-box score-vs">vs</div>
+                    <div class="team-box right">
+                        <span class="team-name">GER</span>
+                        <img class="flag" src="https://flagcdn.com" alt="GER">
+                    </div>
+                </div>
+                <center><span class="status-badge badge-time">Hoy 21:00</span></center>
+            </div>
         </div>
     </div>
 
+    <!-- LÓGICA DE INTERACCIÓN NATIVA -->
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 1. Alternar clases activas en los botones de pestañas
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // 2. Filtrar las tarjetas de partidos correspondientes
+                const selectedTab = button.getAttribute('data-tab');
+                document.querySelectorAll('.match-card').forEach(card => {
+                    if (card.getAttribute('data-type') === selectedTab) {
+                        card.classList.add('show');
+                    } else {
+                        card.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
