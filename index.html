@@ -52,18 +52,14 @@
             transition: background-color 0.2s ease, color 0.2s ease;
         }
         /* Estado activo de las pestañas */
-        .tab-btn.active[data-tab="vivo"] {
-            background-color: #00a86b;
-            color: white;
-        }
-        .tab-btn.active[data-tab="proximos"] {
-            background-color: #00a86b;
-            color: white;
+        .tab-btn.active {
+            background-color: #00a86b !important;
+            color: white !important;
         }
         /* Estado inactivo general */
         .tab-btn:not(.active) {
-            background-color: #0b2218;
-            color: #4b6b5b;
+            background-color: #0b2218 !important;
+            color: #4b6b5b !important;
         }
         /* Contenedor de lista con scroll */
         .matches-list {
@@ -85,11 +81,6 @@
             padding: 12px;
             margin-bottom: 10px;
             border: 1px solid #112e21;
-            display: none; /* Oculto por defecto para que JS lo controle */
-        }
-        /* Mostrar elementos activos */
-        .match-card.show {
-            display: block !important;
         }
         .match-row {
             display: flex;
@@ -172,7 +163,7 @@
         
         <div class="matches-list">
             <!-- PARTIDOS EN VIVO -->
-            <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
+            <div class="match-card" data-type="vivo" style="border-left: 3px solid #ff3b30;">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇺🇾</span>
@@ -187,7 +178,7 @@
                 <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
+            <div class="match-card" data-type="vivo" style="border-left: 3px solid #ff3b30;">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇨🇻</span>
@@ -203,7 +194,7 @@
             </div>
 
             <!-- PARTIDOS FINALIZADOS -->
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇳🇴</span>
@@ -218,7 +209,7 @@
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇸🇳</span>
@@ -233,7 +224,7 @@
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇹🇷</span>
@@ -248,7 +239,7 @@
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇵🇾</span>
@@ -263,7 +254,7 @@
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
                         <span class="flag-emoji">🇯🇵</span>
@@ -278,5 +269,11 @@
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <div class="match-card show" data-type="vivo">
+            <div class="match-card" data-type="vivo">
                 <div class="match-row">
+                    <div class="team-box">
+                        <span class="flag-emoji">🇹🇳</span>
+                        <span class="team-name">TUN</span>
+                    </div>
+                    <div class="score-box score-final">1 : 3</div>
+                    <div class="team-box right">
