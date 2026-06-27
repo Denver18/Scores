@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador en Vivo</title>
+    <title>Marcador Lateral xat.com</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,45 +13,57 @@
         }
 
         body {
-            background-color: #121212;
+            background-color: #0b0f19; /* Fondo oscuro típico de fondo de xat */
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-end; /* Lo empuja totalmente a la derecha */
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
-        /* Contenedor Principal estilo Teléfono */
-        .phone-container {
-            width: 100%;
-            max-width: 360px;
+        /* Contenedor adaptado para la barra lateral derecha de xat.com */
+        .sidebar-container {
+            width: 300px; /* Ancho ideal para no estorbar el chat */
+            height: calc(100vh - 20px);
             background-color: #061c12;
-            border-radius: 24px;
-            padding: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
             border: 1px solid #1a3327;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Permite scroll si hay muchos partidos */
         }
 
-        /* Pestañas Superiores */
+        /* Título del Torneo */
+        .tournament-title {
+            color: #ffd700;
+            font-size: 13px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pestañas */
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
         .tab {
             flex: 1;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 8px;
+            border-radius: 8px;
             border: none;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             text-transform: uppercase;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .tab.active {
@@ -65,36 +77,33 @@
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #ff3333;
             border-radius: 50%;
             display: inline-block;
         }
 
-        /* Contenedor de Lista de Partidos */
         .match-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         /* Tarjeta de Partido */
         .match-card {
             background-color: #04140d;
-            border-radius: 16px;
-            padding: 12px 16px;
+            border-radius: 12px;
+            padding: 10px 12px;
             display: flex;
             flex-direction: column;
             border: 1px solid #11281c;
         }
 
-        /* Estilo especial cuando el partido está EN VIVO */
         .match-card.live-border {
             border: 1px solid #b32424;
         }
 
-        /* Fila Principal de Equipos y Marcador */
         .match-main {
             display: flex;
             align-items: center;
@@ -102,33 +111,29 @@
             width: 100%;
         }
 
-        /* Bloques de Equipos */
         .team {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             width: 35%;
         }
 
         .team.home { justify-content: flex-start; }
-        .team.away { justify-content: flex-end; flex-row-reverse: row; }
+        .team.away { justify-content: flex-end; flex-direction: row-reverse; }
 
         .flag {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             object-fit: cover;
-            background-color: #222;
         }
 
         .team-name {
             color: #ffffff;
             font-weight: bold;
-            font-size: 15px;
-            letter-spacing: 0.5px;
+            font-size: 14px;
         }
 
-        /* Centro: Goles y Tiempo */
         .score-center {
             display: flex;
             flex-direction: column;
@@ -140,35 +145,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 24px;
+            gap: 8px;
+            font-size: 20px;
             font-weight: 900;
+            color: #ffffff;
         }
 
         .score-live { color: #ff3333; }
         .score-final { color: #ffd700; }
 
         .time-status {
-            font-size: 11px;
-            margin-top: 2px;
+            font-size: 10px;
+            margin-top: 1px;
             font-weight: bold;
         }
         .time-status.live-time { color: #ff3333; }
         .time-status.final-time { color: #7b8e85; }
 
-        /* Etiquetas Inferiores de la Tarjeta */
         .badge-row {
             display: flex;
             justify-content: center;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .badge {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
-            padding: 3px 10px;
-            border-radius: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
         .badge.live {
@@ -176,7 +181,7 @@
             color: white;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
         .badge.final {
@@ -184,113 +189,96 @@
             color: #000000;
         }
 
-        /* Mensaje de Carga / Sin Partidos */
-        .status-msg {
-            color: #7b8e85;
-            text-align: center;
-            font-size: 14px;
-            padding: 20px;
+        /* Barra de scroll personalizada */
+        .sidebar-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-container::-webkit-scrollbar-thumb {
+            background: #1a3327;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="phone-container">
-        <!-- Pestañas superiores fijas -->
+    <div class="sidebar-container">
+        <div class="tournament-title">🏆 MUNDIAL 2026 🏆</div>
+        
         <div class="tabs">
             <button class="tab active"><span class="dot"></span> En Vivo</button>
             <button class="tab inactive">Próximos</button>
         </div>
 
-        <!-- Espacio donde se cargarán los partidos dinámicamente -->
         <div class="match-list" id="match-container">
-            <div class="status-msg">Cargando partidos de hoy...</div>
+            <!-- Los partidos se inyectan aquí directamente -->
         </div>
     </div>
 
     <script>
-        // Usamos una API pública y libre de fútbol para obtener resultados reales
-        const API_URL = "https://api-sports.io";
-        
-        // NOTA: Para producción debes registrar tu propia API Key gratuita en api-sports.io
-        // Esta es una key de prueba pública de la comunidad que podría expirar.
-        const API_KEY = "3cd7f1837a7f45c2ec4df646903f07a7"; 
+        // DATOS DEL MUNDIAL: Puedes cambiar los goles, minutos o estados aquí abajo 
+        // y se actualizarán inmediatamente en tu marcador de xat.
+        const partidosMundial = [
+            { home: "URU", away: "ESP", homeGoals: 0, awayGoals: 1, time: "89'", status: "LIVE", homeFlag: "🇺🇾", awayFlag: "🇪🇸" },
+            { home: "CPV", away: "KSA", homeGoals: 0, awayGoals: 0, time: "89'", status: "LIVE", homeFlag: "🇨🇻", awayFlag: "🇸🇦" },
+            { home: "NOR", away: "FRA", homeGoals: 1, awayGoals: 4, time: "Final", status: "FT", homeFlag: "🇳🇴", awayFlag: "🇫🇷" },
+            { home: "SEN", away: "IRQ", homeGoals: 5, awayGoals: 0, time: "Final", status: "FT", homeFlag: "🇸🇳", awayFlag: "🇮🇶" },
+            { home: "TUR", away: "USA", homeGoals: 3, awayGoals: 2, time: "Final", status: "FT", homeFlag: "🇹🇷", awayFlag: "🇺🇸" },
+            { home: "PAR", away: "AUS", homeGoals: 0, awayGoals: 0, time: "Final", status: "FT", homeFlag: "🇵🇾", awayFlag: "🇦🇺" },
+            { home: "JPN", away: "SWE", homeGoals: 1, awayGoals: 1, time: "Final", status: "FT", homeFlag: "🇯🇵", awayFlag: "🇸🇪" },
+            { home: "TUN", away: "NED", homeGoals: 1, awayGoals: 3, time: "Final", status: "FT", homeFlag: "🇹🇳", awayFlag: "🇳🇱" }
+        ];
 
-        async function fetchScores() {
-            try {
-                const response = await fetch(API_URL, {
-                    method: "GET",
-                    headers: {
-                        "x-rapidapi-host": "v3.football.api-sports.io",
-                        "x-rapidapi-key": API_KEY
-                    }
-                });
+        function cargarMarcadores() {
+            const container = document.getElementById("match-container");
+            container.innerHTML = ""; 
 
-                const data = await response.json();
-                const fixtures = data.response;
-                const container = document.getElementById("match-container");
+            partidosMundial.forEach(match => {
+                let isLive = match.status === "LIVE";
+                let isFinal = match.status === "FT";
+
+                let cardClass = isLive ? "match-card live-border" : "match-card";
+                let scoreClass = isLive ? "score-live" : (isFinal ? "score-final" : "");
+                let timeClass = isLive ? "time-status live-time" : "time-status final-time";
                 
-                container.innerHTML = ""; // Limpiar contenedor
-
-                if (!fixtures || fixtures.length === 0) {
-                    container.innerHTML = '<div class="status-msg">No hay partidos en vivo en este momento.</div>';
-                    return;
+                let badgeHTML = "";
+                if (isLive) {
+                    badgeHTML = `<div class="badge-row"><span class="badge live"><span class="dot" style="background:#fff; width:5px; height:5px;"></span> En Vivo</span></div>`;
+                } else if (isFinal) {
+                    badgeHTML = `<div class="badge-row"><span class="badge final">Final</span></div>`;
                 }
 
-                // Generar cada tarjeta de partido dinámicamente
-                fixtures.slice(0, 8).forEach(match => {
-                    const homeTeam = match.teams.home.name.substring(0, 3).toUpperCase();
-                    const awayTeam = match.teams.away.name.substring(0, 3).toUpperCase();
-                    const homeFlag = match.teams.home.logo;
-                    const awayFlag = match.teams.away.logo;
-                    const homeGoals = match.goals.home ?? 0;
-                    const awayGoals = match.goals.away ?? 0;
-                    
-                    const statusCode = match.fixture.status.short; // '1H', '2H', 'FT', etc.
-                    const elapsed = match.fixture.status.elapsed;
-
-                    let isLive = ["1H", "2H", "HT", "ET", "P"].includes(statusCode);
-                    let isFinal = ["FT", "AET", "PEN"].includes(statusCode);
-
-                    // Definir clases visuales según estado de la imagen de referencia
-                    let cardClass = isLive ? "match-card live-border" : "match-card";
-                    let scoreClass = isLive ? "score-live" : (isFinal ? "score-final" : "");
-                    let timeClass = isLive ? "time-status live-time" : "time-status final-time";
-                    
-                    let timeText = isLive ? `${elapsed}'` : (isFinal ? "Final" : "00'");
-                    
-                    let badgeHTML = "";
-                    if (isLive) {
-                        badgeHTML = `<div class="badge-row"><span class="badge live"><span class="dot" style="background:#fff; width:6px; height:6px;"></span> En Vivo</span></div>`;
-                    } else if (isFinal) {
-                        badgeHTML = `<div class="badge-row"><span class="badge final">Final</span></div>`;
-                    }
-
-                    const cardHTML = `
-                        <div class="${cardClass}">
-                            <div class="match-main">
-                                <div class="team home">
-                                    <img class="flag" src="${homeFlag}" alt="${homeTeam}">
-                                    <span class="team-name">${homeTeam}</span>
-                                </div>
-                                <div class="score-center">
-                                    <div class="score-row ${scoreClass}">
-                                        <span>${homeGoals}</span>
-                                        <span style="font-size:18px; margin: 0 4px; color:#7b8e85;">:</span>
-                                        <span>${awayGoals}</span>
-                                    </div>
-                                    <span class="${timeClass}">${timeText}</span>
-                                </div>
-                                <div class="team away">
-                                    <span class="team-name">${awayTeam}</span>
-                                    <img class="flag" src="${awayFlag}" alt="${awayTeam}">
-                                </div>
+                const cardHTML = `
+                    <div class="${cardClass}">
+                        <div class="match-main">
+                            <div class="team home">
+                                <span style="font-size: 18px;">${match.homeFlag}</span>
+                                <span class="team-name">${match.home}</span>
                             </div>
-                            ${badgeHTML}
+                            <div class="score-center">
+                                <div class="score-row ${scoreClass}">
+                                    <span>${match.homeGoals}</span>
+                                    <span style="font-size:14px; color:#7b8e85;">:</span>
+                                    <span>${match.awayGoals}</span>
+                                </div>
+                                <span class="${timeClass}">${match.time}</span>
+                            </div>
+                            <div class="team away">
+                                <span class="team-name">${match.away}</span>
+                                <span style="font-size: 18px;">${match.awayFlag}</span>
+                            </div>
                         </div>
-                    `;
-                    container.innerHTML += cardHTML;
-                });
+                        ${badgeHTML}
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
 
-            } catch (error) {
-                console.error("Error cargando la API:", error);
+        // Ejecuta la carga
+        cargarMarcadores();
+
+        // Simula actualización de datos automática cada 30 segundos
+        setInterval(cargarMarcadores, 30000);
+    </script>
+</body>
+</html>
