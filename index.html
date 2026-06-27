@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador Lateral Interactivo xat</title>
+    <title>Marcador Lateral Real Mundial 2026</title>
     <style>
         body {
             background-color: transparent;
@@ -54,7 +54,6 @@
             color: #7b978d;
         }
 
-        /* Clase para ocultar los partidos que no corresponden a la pestaña activa */
         .oculto {
             display: none !important;
         }
@@ -102,7 +101,7 @@
         }
 
         .num-goles {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 900;
             letter-spacing: 1px;
         }
@@ -121,7 +120,7 @@
         .tag-estado {
             font-size: 8px;
             font-weight: bold;
-            padding: 1px 6px;
+            padding: 2px 6px;
             border-radius: 10px;
             margin-top: 3px;
             text-transform: uppercase;
@@ -149,15 +148,12 @@
 
     <div class="marcador-lateral">
         
-        <!-- Botones con IDs para controlar el clic -->
         <div class="pestanas-mini">
             <button id="btn-envivo" class="btn-mini activo">🔴 EN VIVO</button>
             <button id="btn-proximos" class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
         </div>
 
-        <!-- SECCIÓN: PARTIDOS EN VIVO / FINALIZADOS -->
         <div id="contenedor-envivo">
-            <!-- Partido en vivo 1 -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇪🇬</span>
@@ -165,7 +161,7 @@
                 </div>
                 <div class="score-caja">
                     <div class="num-goles rojo">1 : 1</div>
-                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tiempo-min rojo">2T</div>
                     <div class="tag-estado vivo">Vivo</div>
                 </div>
                 <div class="equipo-caja visitante">
@@ -174,7 +170,6 @@
                 </div>
             </div>
 
-            <!-- Partido en vivo 2 -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇳🇿</span>
@@ -182,7 +177,7 @@
                 </div>
                 <div class="score-caja">
                     <div class="num-goles rojo">0 : 1</div>
-                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tiempo-min rojo">2T</div>
                     <div class="tag-estado vivo">Vivo</div>
                 </div>
                 <div class="equipo-caja visitante">
@@ -191,7 +186,6 @@
                 </div>
             </div>
 
-            <!-- Partido Finalizado -->
             <div class="fila-partido">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇺🇾</span>
@@ -209,18 +203,49 @@
         </div>
 
 
-        <!-- SECCIÓN: PRÓXIMOS PARTIDOS (Oculta por defecto) -->
         <div id="contenedor-proximos" class="oculto">
-            <!-- Próximo Partido 1 -->
+            
             <div class="fila-partido">
                 <div class="equipo-caja local">
-                    <span class="bandera-icono">🇲🇽</span>
-                    <span>MEX</span>
+                    <span class="bandera-icono">🇵🇦</span>
+                    <span>PAN</span>
                 </div>
                 <div class="score-caja">
                     <div class="num-goles gris">vs</div>
-                    <div class="tiempo-min" style="color:#7b978d;">20:00</div>
-                    <div class="tag-estado prog">Mañana</div>
+                    <div class="tiempo-min" style="color:#7b978d;">16:00</div>
+                    <div class="tag-estado prog">Grupo L</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>ENG</span>
+                    <span class="bandera-icono">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                </div>
+            </div>
+
+            <div class="fila-partido">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇨🇴</span>
+                    <span>COL</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles gris">vs</div>
+                    <div class="tiempo-min" style="color:#7b978d;">18:30</div>
+                    <div class="tag-estado prog">Grupo K</div>
+                </div>
+                <div class="equipo-caja visitante">
+                    <span>POR</span>
+                    <span class="bandera-icono">🇵🇹</span>
+                </div>
+            </div>
+
+            <div class="fila-partido">
+                <div class="equipo-caja local">
+                    <span class="bandera-icono">🇯🇴</span>
+                    <span>JOR</span>
+                </div>
+                <div class="score-caja">
+                    <div class="num-goles gris">vs</div>
+                    <div class="tiempo-min" style="color:#7b978d;">21:00</div>
+                    <div class="tag-estado prog">Grupo J</div>
                 </div>
                 <div class="equipo-caja visitante">
                     <span>ARG</span>
@@ -228,34 +253,15 @@
                 </div>
             </div>
 
-            <!-- Próximo Partido 2 -->
-            <div class="fila-partido">
-                <div class="equipo-caja local">
-                    <span class="bandera-icono">🇧🇷</span>
-                    <span>BRA</span>
-                </div>
-                <div class="score-caja">
-                    <div class="num-goles gris">vs</div>
-                    <div class="tiempo-min" style="color:#7b978d;">15:30</div>
-                    <div class="tag-estado prog">28 Jun</div>
-                </div>
-                <div class="equipo-caja visitante">
-                    <span>GER</span>
-                    <span class="bandera-icono">🇩🇪</span>
-                </div>
-            </div>
         </div>
-
     </div>
 
-    <!-- LOGICA EN JAVASCRIPT PARA HACER CLIC -->
     <script>
         const btnEnVivo = document.getElementById('btn-envivo');
         const btnProximos = document.getElementById('btn-proximos');
         const listaEnVivo = document.getElementById('contenedor-envivo');
         const listaProximos = document.getElementById('contenedor-proximos');
 
-        // Al hacer clic en el botón EN VIVO
         btnEnVivo.addEventListener('click', () => {
             btnEnVivo.className = 'btn-mini activo';
             btnProximos.className = 'btn-mini inactivo';
@@ -263,7 +269,6 @@
             listaProximos.classList.add('oculto');
         });
 
-        // Al hacer clic en el botón PROXIMOS
         btnProximos.addEventListener('click', () => {
             btnProximos.className = 'btn-mini activo';
             btnEnVivo.className = 'btn-mini inactivo';
