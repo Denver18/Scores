@@ -1,79 +1,246 @@
-<script>
-    const btnEnVivo = document.getElementById('btn-envivo');
-    const btnProximos = document.getElementById('btn-proximos');
-    const listaEnVivo = document.getElementById('contenedor-envivo');
-    const listaProximos = document.getElementById('contenedor-proximos');
-
-    // Lógica de pestañas original
-    btnEnVivo.addEventListener('click', () => {
-        btnEnVivo.className = 'btn-mini activo'; btnProximos.className = 'btn-mini inactivo';
-        listaEnVivo.classList.remove('oculto'); listaProximos.classList.add('oculto');
-    });
-    btnProximos.addEventListener('click', () => {
-        btnProximos.className = 'btn-mini activo'; btnEnVivo.className = 'btn-mini inactivo';
-        listaProximos.classList.remove('oculto'); listaEnVivo.classList.add('oculto');
-    });
-
-    // Función que lee los datos actualizados de GitHub
-    async function actualizarMarcador() {
-        try {
-            // Lee el archivo partidos.json que está en la misma carpeta
-            const respuesta = await fetch('partidos.json?t=' + new Date().getTime()); // El ?t= evita que el navegador guarde cache viejo
-            const datos = await respuesta.json();
-
-            // Actualizar pestaña HOY
-            listaEnVivo.innerHTML = '';
-            datos.hoy.forEach(partido => {
-                const esVivo = partido.estado.toLowerCase() === 'vivo';
-                listaEnVivo.innerHTML += `
-                    <div class="fila-partido ${esVivo ? 'en-vivo' : ''}">
-                        <div class="equipo-caja local">
-                            <span class="bandera-icono">${partido.banderaLocal}</span>
-                            <span>${partido.local}</span>
-                        </div>
-                        <div class="score-caja">
-                            <div class="num-goles ${esVivo ? 'rojo' : 'amarillo'}">${partido.goles}</div>
-                            ${partido.tiempo ? `<div class="tiempo-min ${esVivo ? 'rojo' : ''}">${partido.tiempo}</div>` : ''}
-                            <div class="tag-estado ${esVivo ? 'vivo' : 'fin'}">${partido.estado}</div>
-                        </div>
-                        <div class="equipo-caja visitante">
-                            <span>${partido.visitante}</span>
-                            <span class="bandera-icono">${partido.banderaVisitante}</span>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Actualizar pestaña PRÓXIMOS
-            listaProximos.innerHTML = '';
-            datos.proximos.forEach(partido => {
-                listaProximos.innerHTML += `
-                    <div class="fila-partido">
-                        <div class="equipo-caja local">
-                            <span class="bandera-icono">${partido.banderaLocal}</span>
-                            <span>${partido.local}</span>
-                        </div>
-                        <div class="score-caja">
-                            <div class="num-goles gris">vs</div>
-                            <div class="tiempo-min" style="color:#70a4ab;">${partido.tiempo}</div>
-                            <div class="tag-estado prog">${partido.estado}</div>
-                        </div>
-                        <div class="equipo-caja visitante">
-                            <span>${partido.visitante}</span>
-                            <span class="bandera-icono">${partido.banderaVisitante}</span>
-                        </div>
-                    </div>
-                `;
-            });
-
-        } catch (error) {
-            console.error("Error al actualizar el marcador:", error);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Oficial FIFA xat (Turquesa)</title>
+    <style>
+        body {
+            background-color: transparent;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-end; 
+            width: 100%;
         }
-    }
 
-    // Ejecutar al cargar la página
-    actualizarMarcador();
+        /* FONDO PRINCIPAL TURQUESA MUY OSCURO */
+        .marcador-lateral {
+            background-color: #021619; /* Turquesa oscuro profundo */
+            width: 280px;          
+            margin-top: 50px;      
+            margin-right: 5px;     
+            border-radius: 16px;   
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border: 2px solid #063940; /* Borde turquesa medio */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
 
-    // Volver a revisar cambios cada 15 segundos
-    setInterval(actualizarMarcador, 15000); 
-</script>
+        .pestanas-mini {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .btn-mini {
+            flex: 1;
+            padding: 7px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* BOTÓN ACTIVO EN TURQUESA ENÉRGICO */
+        .btn-mini.activo {
+            background-color: #00a896; /* Turquesa brillante */
+            color: #ffffff;
+        }
+
+        .btn-mini.inactivo {
+            background-color: #05292e; /* Turquesa apagado */
+            color: #70a4ab;
+        }
+
+        .oculto {
+            display: none !important;
+        }
+
+        /* FILAS CON FONDO TURQUESA DE CONTRASTE */
+        .fila-partido {
+            background-color: #042024; /* Fondo de fila turquesa */
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #07353b;
+        }
+
+        .fila-partido.en-vivo {
+            border: 1px solid #731317;
+            background: linear-gradient(180deg, #05262b 0%, #170d0f 100%);
+        }
+
+        .equipo-caja {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 35%;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .equipo-caja.local { justify-content: flex-start; }
+        .equipo-caja.visitante { justify-content: flex-end; }
+
+        .bandera-icono {
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .score-caja {
+            width: 30%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .num-goles {
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .num-goles.rojo { color: #ff3b30; }
+        .num-goles.amarillo { color: #e2b93b; }
+        .num-goles.gris { color: #70a4ab; }
+
+        .tiempo-min {
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 1px;
+        }
+        .tiempo-min.rojo { color: #ff3b30; }
+
+        .tag-estado {
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 10px;
+            margin-top: 3px;
+            text-transform: uppercase;
+        }
+
+        .tag-estado.vivo { background-color: #ff3b30; color: white; }
+        .tag-estado.fin { background-color: #052623; color: #e2b93b; border: 1px solid #143d39; }
+        .tag-estado.prog { background-color: #05292e; color: #70a4ab; border: 1px solid #0f4047; }
+    </style>
+</head>
+<body>
+
+    <div class="marcador-lateral">
+        
+        <div class="pestanas-mini">
+            <button id="btn-envivo" class="btn-mini activo">🔴 HOY</button>
+            <button id="btn-proximos" class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
+        </div>
+
+        <div id="contenedor-envivo">
+            </div>
+
+        <div id="contenedor-proximos" class="oculto">
+            </div>
+
+    </div>
+
+    <script>
+        const btnEnVivo = document.getElementById('btn-envivo');
+        const btnProximos = document.getElementById('btn-proximos');
+        const listaEnVivo = document.getElementById('contenedor-envivo');
+        const listaProximos = document.getElementById('contenedor-proximos');
+
+        // Control de pestañas
+        btnEnVivo.addEventListener('click', () => {
+            btnEnVivo.className = 'btn-mini activo'; 
+            btnProximos.className = 'btn-mini inactivo';
+            listaEnVivo.classList.remove('oculto'); 
+            listaProximos.classList.add('oculto');
+        });
+
+        btnProximos.addEventListener('click', () => {
+            btnProximos.className = 'btn-mini activo'; 
+            btnEnVivo.className = 'btn-mini inactivo';
+            listaProximos.classList.remove('oculto'); 
+            listaEnVivo.classList.add('oculto');
+        });
+
+        // Función que descarga los datos en vivo desde partidos.json
+        async function actualizarMarcador() {
+            try {
+                const respuesta = await fetch('partidos.json?t=' + new Date().getTime());
+                const datos = await respuesta.json();
+                
+                // 1. Renderizar pestaña HOY
+                listaEnVivo.innerHTML = '';
+                if (datos.hoy && datos.hoy.length > 0) {
+                    datos.hoy.forEach(partido => {
+                        const esVivo = partido.estado.toLowerCase() === 'vivo';
+                        listaEnVivo.innerHTML += `
+                            <div class="fila-partido ${esVivo ? 'en-vivo' : ''}">
+                                <div class="equipo-caja local">
+                                    <span class="bandera-icono">${partido.banderaLocal}</span>
+                                    <span>${partido.local}</span>
+                                </div>
+                                <div class="score-caja">
+                                    <div class="num-goles ${esVivo ? 'rojo' : 'amarillo'}">${partido.goles}</div>
+                                    ${partido.tiempo ? `<div class="tiempo-min ${esVivo ? 'rojo' : ''}">${partido.tiempo}</div>` : ''}
+                                    <div class="tag-estado ${esVivo ? 'vivo' : 'fin'}">${partido.estado}</div>
+                                </div>
+                                <div class="equipo-caja visitante">
+                                    <span>${partido.visitante}</span>
+                                    <span class="bandera-icono">${partido.banderaVisitante}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // 2. Renderizar pestaña PRÓXIMOS
+                listaProximos.innerHTML = '';
+                if (datos.proximos && datos.proximos.length > 0) {
+                    datos.proximos.forEach(partido => {
+                        listaProximos.innerHTML += `
+                            <div class="fila-partido">
+                                <div class="equipo-caja local">
+                                    <span class="bandera-icono">${partido.banderaLocal}</span>
+                                    <span>${partido.local}</span>
+                                </div>
+                                <div class="score-caja">
+                                    <div class="num-goles gris">vs</div>
+                                    <div class="tiempo-min" style="color:#70a4ab;">${partido.tiempo}</div>
+                                    <div class="tag-estado prog">${partido.estado}</div>
+                                </div>
+                                <div class="equipo-caja visitante">
+                                    <span>${partido.visitante}</span>
+                                    <span class="bandera-icono">${partido.banderaVisitante}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+            } catch (error) {
+                console.error("Error cargando los partidos:", error);
+            }
+        }
+
+        // Ejecutar inmediatamente al abrir la página
+        actualizarMarcador();
+
+        // Buscar actualizaciones cada 15 segundos de forma automática
+        setInterval(actualizarMarcador, 15000);
+    </script>
+
+</body>
+</html>
