@@ -114,9 +114,9 @@
         .num-goles.gris { color: #7b978d; }
 
         .tiempo-min {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: bold;
-            margin-top: -1px;
+            margin-top: 1px;
         }
         .tiempo-min.rojo { color: #ff3b30; }
 
@@ -143,7 +143,10 @@
             <button id="btn-proximos" class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
         </div>
 
+        <!-- SECCIÓN: HOY -->
         <div id="contenedor-envivo">
+            
+            <!-- Partido en vivo con minutos añadidos -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇪🇬</span>
@@ -151,7 +154,7 @@
                 </div>
                 <div class="score-caja">
                     <div class="num-goles rojo">1 : 1</div>
-                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tiempo-min rojo">82'</div>
                     <div class="tag-estado vivo">Vivo</div>
                 </div>
                 <div class="equipo-caja visitante">
@@ -160,6 +163,7 @@
                 </div>
             </div>
 
+            <!-- Partido en vivo con minutos añadidos -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇳🇿</span>
@@ -167,7 +171,7 @@
                 </div>
                 <div class="score-caja">
                     <div class="num-goles rojo">0 : 1</div>
-                    <div class="tiempo-min rojo">3T</div>
+                    <div class="tiempo-min rojo">75'</div>
                     <div class="tag-estado vivo">Vivo</div>
                 </div>
                 <div class="equipo-caja visitante">
@@ -267,8 +271,8 @@
             </div>
         </div>
 
+        <!-- SECCIÓN: PRÓXIMOS -->
         <div id="contenedor-proximos" class="oculto">
-            
             <div class="fila-partido">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇩🇿</span>
@@ -364,7 +368,6 @@
                     <span class="bandera-icono">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
                 </div>
             </div>
-
         </div>
     </div>
 
