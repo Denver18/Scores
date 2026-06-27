@@ -1,1 +1,147 @@
+/* ==========================================================================
+   CONFIGURACIÓN GENERAL Y ALINEACIÓN EN XAT
+   ========================================================================== */
+body {
+    background-color: transparent;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end; /* Magnético hacia el lado derecho de xat */
+    width: 100%;
+}
 
+/* CONTENEDOR PRINCIPAL TURQUESA */
+.marcador-lateral {
+    background-color: #021619; /* Turquesa oscuro profundo */
+    width: 280px;              /* Ancho calibrado para no deformar xat */
+    margin-top: 50px;          /* Separación del techo para que se vean los botones */
+    margin-right: 5px;         /* Separación del borde derecho */
+    border-radius: 16px;   
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    border: 2px solid #063940; /* Borde turquesa medio */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   PESTAÑAS DE NAVEGACIÓN (HOY / PRÓXIMOS)
+   ========================================================================== */
+.pestanas-mini {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.btn-mini {
+    flex: 1;
+    padding: 7px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s ease;
+}
+
+/* Botón Activo (Turquesa Eléctrico) */
+.btn-mini.activo {
+    background-color: #00a896; 
+    color: #ffffff;
+}
+
+/* Botón Inactivo (Turquesa Apagado) */
+.btn-mini.inactivo {
+    background-color: #05292e; 
+    color: #70a4ab;
+}
+
+/* Clase utilitaria para ocultar listas */
+.oculto {
+    display: none !important;
+}
+
+/* ==========================================================================
+   FILAS Y CAJAS DE PARTIDOS
+   ========================================================================== */
+.fila-partido {
+    background-color: #042024; /* Fondo turquesa de cada partido */
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #07353b;
+}
+
+/* Efecto especial de brillo para partidos En Vivo */
+.fila-partido.en-vivo {
+    border: 1px solid #731317;
+    background: linear-gradient(180deg, #05262b 0%, #170d0f 100%);
+}
+
+.equipo-caja {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 35%;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.equipo-caja.local { justify-content: flex-start; }
+.equipo-caja.visitante { justify-content: flex-end; }
+
+.bandera-icono {
+    font-size: 14px;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   CONTADORES, MARCADORES Y TIEMPOS
+   ========================================================================== */
+.score-caja {
+    width: 30%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.num-goles {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+/* Colores dinámicos del Score según el estado */
+.num-goles.rojo { color: #ff3b30; }     /* Vivo */
+.num-goles.amarillo { color: #e2b93b; } /* Finalizado */
+.num-goles.gris { color: #70a4ab; }     /* Próximos (vs) */
+
+.tiempo-min {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 1px;
+}
+.tiempo-min.rojo { color: #ff3b30; }
+
+/* Etiquetas de estado inferiores */
+.tag-estado {
+    font-size: 8px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 10px;
+    margin-top: 3px;
+    text-transform: uppercase;
+}
+
+.tag-estado.vivo { background-color: #ff3b30; color: white; }
+.tag-estado.fin { background-color: #052623; color: #e2b93b; border: 1px solid #143d39; }
+.tag-estado.prog { background-color: #05292e; color: #70a4ab; border: 1px solid #0f4047; }
