@@ -13,28 +13,27 @@
         }
 
         body {
-            background-color: #0b0f19; /* Fondo oscuro típico de fondo de xat */
+            background-color: transparent; /* Fondo transparente para acoplarse a xat */
             display: flex;
-            justify-content: flex-end; /* Lo empuja totalmente a la derecha */
+            justify-content: flex-end; /* Alineación total a la derecha */
             min-height: 100vh;
             padding: 10px;
+            overflow: hidden;
         }
 
-        /* Contenedor adaptado para la barra lateral derecha de xat.com */
+        /* Contenedor adaptado para la barra lateral derecha de xat */
         .sidebar-container {
-            width: 300px; /* Ancho ideal para no estorbar el chat */
+            width: 290px; 
             height: calc(100vh - 20px);
             background-color: #061c12;
             border-radius: 16px;
             padding: 12px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.6);
             border: 1px solid #1a3327;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Permite scroll si hay muchos partidos */
         }
 
-        /* Título del Torneo */
         .tournament-title {
             color: #ffd700;
             font-size: 13px;
@@ -45,7 +44,6 @@
             letter-spacing: 1px;
         }
 
-        /* Pestañas */
         .tabs {
             display: flex;
             gap: 6px;
@@ -58,7 +56,7 @@
             border-radius: 8px;
             border: none;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
@@ -84,13 +82,16 @@
             display: inline-block;
         }
 
+        /* Zona con scroll para los partidos */
         .match-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 2px;
         }
 
-        /* Tarjeta de Partido */
         .match-card {
             background-color: #04140d;
             border-radius: 12px;
@@ -122,16 +123,13 @@
         .team.away { justify-content: flex-end; flex-direction: row-reverse; }
 
         .flag {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            object-fit: cover;
+            font-size: 16px;
         }
 
         .team-name {
             color: #ffffff;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .score-center {
@@ -145,8 +143,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-size: 20px;
+            gap: 6px;
+            font-size: 19px;
             font-weight: 900;
             color: #ffffff;
         }
@@ -189,11 +187,17 @@
             color: #000000;
         }
 
-        /* Barra de scroll personalizada */
-        .sidebar-container::-webkit-scrollbar {
+        .status-msg {
+            color: #7b8e85;
+            font-size: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .match-list::-webkit-scrollbar {
             width: 4px;
         }
-        .sidebar-container::-webkit-scrollbar-thumb {
+        .match-list::-webkit-scrollbar-thumb {
             background: #1a3327;
             border-radius: 10px;
         }
@@ -202,7 +206,7 @@
 <body>
 
     <div class="sidebar-container">
-        <div class="tournament-title">🏆 MUNDIAL 2026 🏆</div>
+        <div class="tournament-title" id="tournament-name">Cargando Torneo...</div>
         
         <div class="tabs">
             <button class="tab active"><span class="dot"></span> En Vivo</button>
@@ -210,75 +214,84 @@
         </div>
 
         <div class="match-list" id="match-container">
-            <!-- Los partidos se inyectan aquí directamente -->
+            <div class="status-msg">Conectando con el archivo de resultados...</div>
         </div>
     </div>
 
     <script>
-        // DATOS DEL MUNDIAL: Puedes cambiar los goles, minutos o estados aquí abajo 
-        // y se actualizarán inmediatamente en tu marcador de xat.
-        const partidosMundial = [
-            { home: "URU", away: "ESP", homeGoals: 0, awayGoals: 1, time: "89'", status: "LIVE", homeFlag: "🇺🇾", awayFlag: "🇪🇸" },
-            { home: "CPV", away: "KSA", homeGoals: 0, awayGoals: 0, time: "89'", status: "LIVE", homeFlag: "🇨🇻", awayFlag: "🇸🇦" },
-            { home: "NOR", away: "FRA", homeGoals: 1, awayGoals: 4, time: "Final", status: "FT", homeFlag: "🇳🇴", awayFlag: "🇫🇷" },
-            { home: "SEN", away: "IRQ", homeGoals: 5, awayGoals: 0, time: "Final", status: "FT", homeFlag: "🇸🇳", awayFlag: "🇮🇶" },
-            { home: "TUR", away: "USA", homeGoals: 3, awayGoals: 2, time: "Final", status: "FT", homeFlag: "🇹🇷", awayFlag: "🇺🇸" },
-            { home: "PAR", away: "AUS", homeGoals: 0, awayGoals: 0, time: "Final", status: "FT", homeFlag: "🇵🇾", awayFlag: "🇦🇺" },
-            { home: "JPN", away: "SWE", homeGoals: 1, awayGoals: 1, time: "Final", status: "FT", homeFlag: "🇯🇵", awayFlag: "🇸🇪" },
-            { home: "TUN", away: "NED", homeGoals: 1, awayGoals: 3, time: "Final", status: "FT", homeFlag: "🇹🇳", awayFlag: "🇳🇱" }
-        ];
+        // URL DEL ARCHIVO JSON EXTERNO
+        // Reemplaza esta URL de ejemplo por el enlace real donde subas tu archivo JSON
+        const JSON_URL = "https://jsonbin.io"; 
 
-        function cargarMarcadores() {
-            const container = document.getElementById("match-container");
-            container.innerHTML = ""; 
-
-            partidosMundial.forEach(match => {
-                let isLive = match.status === "LIVE";
-                let isFinal = match.status === "FT";
-
-                let cardClass = isLive ? "match-card live-border" : "match-card";
-                let scoreClass = isLive ? "score-live" : (isFinal ? "score-final" : "");
-                let timeClass = isLive ? "time-status live-time" : "time-status final-time";
+        async function consultarArchivoExterno() {
+            try {
+                const respuesta = await fetch(JSON_URL);
+                const datos = await respuesta.json();
                 
-                let badgeHTML = "";
-                if (isLive) {
-                    badgeHTML = `<div class="badge-row"><span class="badge live"><span class="dot" style="background:#fff; width:5px; height:5px;"></span> En Vivo</span></div>`;
-                } else if (isFinal) {
-                    badgeHTML = `<div class="badge-row"><span class="badge final">Final</span></div>`;
+                // Actualizar el título del torneo desde el JSON si existe
+                document.getElementById("tournament-name").innerText = datos.torneo || "MUNDIAL 2026";
+                
+                const listaPartidos = datos.partidos;
+                const container = document.getElementById("match-container");
+                container.innerHTML = ""; 
+
+                if(!listaPartidos || listaPartidos.length === 0){
+                    container.innerHTML = '<div class="status-msg">No hay partidos registrados en el archivo.</div>';
+                    return;
                 }
 
-                const cardHTML = `
-                    <div class="${cardClass}">
-                        <div class="match-main">
-                            <div class="team home">
-                                <span style="font-size: 18px;">${match.homeFlag}</span>
-                                <span class="team-name">${match.home}</span>
-                            </div>
-                            <div class="score-center">
-                                <div class="score-row ${scoreClass}">
-                                    <span>${match.homeGoals}</span>
-                                    <span style="font-size:14px; color:#7b8e85;">:</span>
-                                    <span>${match.awayGoals}</span>
+                listaPartidos.forEach(match => {
+                    let isLive = match.status === "LIVE";
+                    let isFinal = match.status === "FT";
+
+                    let cardClass = isLive ? "match-card live-border" : "match-card";
+                    let scoreClass = isLive ? "score-live" : (isFinal ? "score-final" : "");
+                    let timeClass = isLive ? "time-status live-time" : "time-status final-time";
+                    
+                    let badgeHTML = "";
+                    if (isLive) {
+                        badgeHTML = `<div class="badge-row"><span class="badge live"><span class="dot" style="background:#fff; width:5px; height:5px;"></span> En Vivo</span></div>`;
+                    } else if (isFinal) {
+                        badgeHTML = `<div class="badge-row"><span class="badge final">Final</span></div>`;
+                    }
+
+                    const cardHTML = `
+                        <div class="${cardClass}">
+                            <div class="match-main">
+                                <div class="team home">
+                                    <span class="flag">${match.homeFlag}</span>
+                                    <span class="team-name">${match.home}</span>
                                 </div>
-                                <span class="${timeClass}">${match.time}</span>
+                                <div class="score-center">
+                                    <div class="score-row ${scoreClass}">
+                                        <span>${match.homeGoals}</span>
+                                        <span style="font-size:14px; color:#7b8e85;">:</span>
+                                        <span>${match.awayGoals}</span>
+                                    </div>
+                                    <span class="${timeClass}">${match.time}</span>
+                                </div>
+                                <div class="team away">
+                                    <span class="team-name">${match.away}</span>
+                                    <span class="flag">${match.awayFlag}</span>
+                                </div>
                             </div>
-                            <div class="team away">
-                                <span class="team-name">${match.away}</span>
-                                <span style="font-size: 18px;">${match.awayFlag}</span>
-                            </div>
+                            ${badgeHTML}
                         </div>
-                        ${badgeHTML}
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-            });
+                    `;
+                    container.innerHTML += cardHTML;
+                });
+
+            } catch (error) {
+                console.error("Error al leer el archivo JSON:", error);
+                document.getElementById("match-container").innerHTML = '<div class="status-msg">Error de sincronización con el archivo externo.</div>';
+            }
         }
 
-        // Ejecuta la carga
-        cargarMarcadores();
+        // Carga inicial al abrir la barra
+        consultarArchivoExterno();
 
-        // Simula actualización de datos automática cada 30 segundos
-        setInterval(cargarMarcadores, 30000);
+        // Revisa el archivo externo cada 20 segundos para ver si cambiaste un gol o minuto
+        setInterval(consultarArchivoExterno, 20000);
     </script>
 </body>
 </html>
