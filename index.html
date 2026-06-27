@@ -12,16 +12,16 @@
             padding: 0;
             box-sizing: border-box;
             display: flex;
-            justify-content: flex-end; /* Fuerza todo el diseño magnéticamente a la derecha */
+            justify-content: flex-end; /* Alineado a la derecha */
             width: 100%;
         }
 
-        /* CONTENEDOR AJUSTADO PARA EL PANEL LATERAL DERECHO DE XAT */
+        /* CONTENEDOR CON MÁS ESPACIO SUPERIOR */
         .marcador-lateral {
             background-color: #041a12;
-            width: 280px;          /* Medida perfecta para que no salga ancho */
-            margin-top: 15px;      /* Despegado del borde superior de xat */
-            margin-right: 5px;     /* Ligero espacio con el borde derecho */
+            width: 280px;          
+            margin-top: 50px;      /* SE MOVIÓ MÁS ABAJO AQUÍ para que no se corte en xat */
+            margin-right: 5px;     
             border-radius: 16px;   
             padding: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
@@ -144,10 +144,7 @@
             <button id="btn-proximos" class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
         </div>
 
-        <!-- SECCIÓN: TODOS LOS DE HOY (EN VIVO Y FINALIZADOS) -->
         <div id="contenedor-envivo">
-            
-            <!-- En vivo 1 -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇪🇬</span>
@@ -164,7 +161,6 @@
                 </div>
             </div>
 
-            <!-- En vivo 2 -->
             <div class="fila-partido en-vivo">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇳🇿</span>
@@ -181,7 +177,6 @@
                 </div>
             </div>
 
-            <!-- Finalizados de Hoy -->
             <div class="fila-partido">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇺🇾</span>
@@ -273,9 +268,7 @@
             </div>
         </div>
 
-        <!-- SECCIÓN: PRÓXIMOS PARTIDOS COMPLETOS (SÁBADO 27 DE JUNIO) -->
         <div id="contenedor-proximos" class="oculto">
-            
             <div class="fila-partido">
                 <div class="equipo-caja local">
                     <span class="bandera-icono">🇩🇿</span>
@@ -371,7 +364,6 @@
                     <span class="bandera-icono">ENG</span>
                 </div>
             </div>
-
         </div>
     </div>
 
