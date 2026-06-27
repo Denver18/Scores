@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador Lateral xat</title>
+    <title>Marcador Lateral Derecho xat</title>
     <style>
-        /* Optimización para el espacio lateral de xat */
+        /* Forzar la alineación hacia la derecha */
         body {
-            background-color: transparent; /* Permite que se adapte al fondo de la pestaña */
+            background-color: transparent;
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 5px;
             box-sizing: border-box;
+            display: flex;
+            justify-content: flex-end; /* Mueve todo el contenido a la derecha */
+            width: 100%;
         }
 
-        /* Contenedor adaptado al 100% del ancho del panel derecho */
+        /* Contenedor con la medida exacta para el lateral de xat */
         .marcador-lateral {
             background-color: #041a12;
-            width: 100%;
-            max-width: 320px; /* Ancho ideal para la barra de xat */
-            margin: 0 auto;
+            width: 300px; /* Ancho fijo ideal para la barra de xat */
             border-radius: 12px;
             padding: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
@@ -27,7 +28,7 @@
             box-sizing: border-box;
         }
 
-        /* Pestañas compactas */
+        /* Pestañas de Filtros */
         .pestanas-mini {
             display: flex;
             gap: 6px;
@@ -55,7 +56,7 @@
             color: #7b978d;
         }
 
-        /* Tarjetas de partidos más compactas para no cortar texto */
+        /* Tarjetas de partidos */
         .fila-partido {
             background-color: #062318;
             border-radius: 8px;
@@ -72,7 +73,7 @@
             background: linear-gradient(180deg, #0d2119 0%, #170d0f 100%);
         }
 
-        /* Alineación de equipos estrecha */
+        /* Bloques de Equipos */
         .equipo-caja {
             display: flex;
             align-items: center;
@@ -87,11 +88,11 @@
         .equipo-caja.visitante { justify-content: flex-end; }
 
         .bandera-icono {
-            font-size: 16px; /* Tamaño ideal para emojis en espacios pequeños */
+            font-size: 16px;
             display: inline-block;
         }
 
-        /* Centro del marcador reducido */
+        /* Sección del Marcador Central */
         .score-caja {
             width: 30%;
             text-align: center;
@@ -116,7 +117,7 @@
         }
         .tiempo-min.rojo { color: #ff3b30; }
 
-        /* Etiquetas mini estilo xat */
+        /* Etiquetas */
         .tag-estado {
             font-size: 8px;
             font-weight: bold;
@@ -142,13 +143,12 @@
 
     <div class="marcador-lateral">
         
-        <!-- Filtros superiores -->
         <div class="pestanas-mini">
             <button class="btn-mini activo">🔴 EN VIVO</button>
             <button class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
         </div>
 
-        <!-- Bloque En Vivo -->
+        <!-- Partido 1 -->
         <div class="fila-partido en-vivo">
             <div class="equipo-caja local">
                 <span class="bandera-icono">🇪🇬</span>
@@ -165,6 +165,7 @@
             </div>
         </div>
 
+        <!-- Partido 2 -->
         <div class="fila-partido en-vivo">
             <div class="equipo-caja local">
                 <span class="bandera-icono">🇳🇿</span>
@@ -181,7 +182,7 @@
             </div>
         </div>
 
-        <!-- Bloque Finalizados -->
+        <!-- Partido 3 -->
         <div class="fila-partido">
             <div class="equipo-caja local">
                 <span class="bandera-icono">🇺🇾</span>
@@ -194,21 +195,6 @@
             <div class="equipo-caja visitante">
                 <span>ESP</span>
                 <span class="bandera-icono">🇪🇸</span>
-            </div>
-        </div>
-
-        <div class="fila-partido">
-            <div class="equipo-caja local">
-                <span class="bandera-icono">🇨🇻</span>
-                <span>CPV</span>
-            </div>
-            <div class="score-caja">
-                <div class="num-goles amarillo">0 : 0</div>
-                <div class="tag-estado fin">Final</div>
-            </div>
-            <div class="equipo-caja visitante">
-                <span>KSA</span>
-                <span class="bandera-icono">🇸🇦</span>
             </div>
         </div>
 
