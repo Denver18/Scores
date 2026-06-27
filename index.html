@@ -2,73 +2,217 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Widget Mundial Live</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Lateral xat</title>
     <style>
-        body { margin: 0; background: transparent; overflow: hidden; }
-        .score-container { width: 320px; font-family: Arial, sans-serif; background-color: #0b1a13; border: 2px solid #1a3a2b; border-radius: 15px; padding: 10px; color: #ffffff; box-sizing: border-box; }
-        .header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .tab-live { flex: 1; background-color: #122b1e; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; border: 1px solid #1e4631; color: #ff4d4d; margin-right: 5px; }
-        .tab-next { flex: 1; background-color: #1a3a2b; padding: 6px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: bold; color: #a0a0a0; margin-left: 5px; }
-        .match-list { display: flex; flex-direction: column; gap: 8px; }
-        .match-card { background-color: #0d2218; border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; border: 1px solid #153324; }
-        .match-row { display: flex; justify-content: space-between; width: 100%; align-items: center; font-size: 13px; font-weight: bold; }
-        .team-home { display: flex; align-items: center; gap: 5px; width: 35%; }
-        .score { font-size: 16px; color: #ffcc00; text-align: center; width: 30%; }
-        .team-away { display: flex; align-items: center; gap: 5px; justify-content: flex-end; width: 35%; }
-        .status { background-color: #244d36; font-size: 10px; color: #bbeecc; padding: 2px 10px; border-radius: 12px; margin-top: 5px; font-weight: bold; }
+        /* Optimización para el espacio lateral de xat */
+        body {
+            background-color: transparent; /* Permite que se adapte al fondo de la pestaña */
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor adaptado al 100% del ancho del panel derecho */
+        .marcador-lateral {
+            background-color: #041a12;
+            width: 100%;
+            max-width: 320px; /* Ancho ideal para la barra de xat */
+            margin: 0 auto;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border: 1px solid #062e20;
+            box-sizing: border-box;
+        }
+
+        /* Pestañas compactas */
+        .pestanas-mini {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .btn-mini {
+            flex: 1;
+            padding: 6px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-mini.activo {
+            background-color: #0d8358;
+            color: #ffffff;
+        }
+
+        .btn-mini.inactivo {
+            background-color: #122b22;
+            color: #7b978d;
+        }
+
+        /* Tarjetas de partidos más compactas para no cortar texto */
+        .fila-partido {
+            background-color: #062318;
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #0a3324;
+        }
+
+        .fila-partido.en-vivo {
+            border: 1px solid #731317;
+            background: linear-gradient(180deg, #0d2119 0%, #170d0f 100%);
+        }
+
+        /* Alineación de equipos estrecha */
+        .equipo-caja {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 35%;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .equipo-caja.local { justify-content: flex-start; }
+        .equipo-caja.visitante { justify-content: flex-end; }
+
+        .bandera-icono {
+            font-size: 16px; /* Tamaño ideal para emojis en espacios pequeños */
+            display: inline-block;
+        }
+
+        /* Centro del marcador reducido */
+        .score-caja {
+            width: 30%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .num-goles {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .num-goles.rojo { color: #ff3b30; }
+        .num-goles.amarillo { color: #e2b93b; }
+
+        .tiempo-min {
+            font-size: 9px;
+            font-weight: bold;
+            margin-top: -1px;
+        }
+        .tiempo-min.rojo { color: #ff3b30; }
+
+        /* Etiquetas mini estilo xat */
+        .tag-estado {
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 6px;
+            border-radius: 10px;
+            margin-top: 3px;
+            text-transform: uppercase;
+        }
+
+        .tag-estado.vivo {
+            background-color: #ff3b30;
+            color: white;
+        }
+
+        .tag-estado.fin {
+            background-color: #172b17;
+            color: #e2b93b;
+            border: 1px solid #2e4a2e;
+        }
     </style>
 </head>
 <body>
 
-<div class="score-container">
-    <div class="header">
-        <div class="tab-live">🔴 EN VIVO</div>
-        <div class="tab-next">📅 PRÓXIMOS</div>
+    <div class="marcador-lateral">
+        
+        <!-- Filtros superiores -->
+        <div class="pestanas-mini">
+            <button class="btn-mini activo">🔴 EN VIVO</button>
+            <button class="btn-mini inactivo">🗓️ PRÓXIMOS</button>
+        </div>
+
+        <!-- Bloque En Vivo -->
+        <div class="fila-partido en-vivo">
+            <div class="equipo-caja local">
+                <span class="bandera-icono">🇪🇬</span>
+                <span>EGY</span>
+            </div>
+            <div class="score-caja">
+                <div class="num-goles rojo">1 : 1</div>
+                <div class="tiempo-min rojo">3T</div>
+                <div class="tag-estado vivo">Vivo</div>
+            </div>
+            <div class="equipo-caja visitante">
+                <span>IRN</span>
+                <span class="bandera-icono">🇮🇷</span>
+            </div>
+        </div>
+
+        <div class="fila-partido en-vivo">
+            <div class="equipo-caja local">
+                <span class="bandera-icono">🇳🇿</span>
+                <span>NZL</span>
+            </div>
+            <div class="score-caja">
+                <div class="num-goles rojo">0 : 1</div>
+                <div class="tiempo-min rojo">3T</div>
+                <div class="tag-estado vivo">Vivo</div>
+            </div>
+            <div class="equipo-caja visitante">
+                <span>BEL</span>
+                <span class="bandera-icono">🇧🇪</span>
+            </div>
+        </div>
+
+        <!-- Bloque Finalizados -->
+        <div class="fila-partido">
+            <div class="equipo-caja local">
+                <span class="bandera-icono">🇺🇾</span>
+                <span>URU</span>
+            </div>
+            <div class="score-caja">
+                <div class="num-goles amarillo">0 : 1</div>
+                <div class="tag-estado fin">Final</div>
+            </div>
+            <div class="equipo-caja visitante">
+                <span>ESP</span>
+                <span class="bandera-icono">🇪🇸</span>
+            </div>
+        </div>
+
+        <div class="fila-partido">
+            <div class="equipo-caja local">
+                <span class="bandera-icono">🇨🇻</span>
+                <span>CPV</span>
+            </div>
+            <div class="score-caja">
+                <div class="num-goles amarillo">0 : 0</div>
+                <div class="tag-estado fin">Final</div>
+            </div>
+            <div class="equipo-caja visitante">
+                <span>KSA</span>
+                <span class="bandera-icono">🇸🇦</span>
+            </div>
+        </div>
+
     </div>
-    <div class="match-list" id="partidos-mundial">
-        <!-- Cargando datos... -->
-    </div>
-</div>
-
-<script>
-    // Conexión simulada a un origen de datos del Mundial
-    async function actualizarMarcador() {
-        try {
-            // Reemplaza esta URL con el endpoint de tu API contratada (ej. FootyStats o Sportmonks)
-            // const response = await fetch('TU_API_URL_MUNDIAL');
-            // const data = await response.json();
-            
-            // Simulación en tiempo real estructurada
-            const partidosSimulados = [
-                { home: "🇺🇾 URU", score: "0 : 1", away: "ESP 🇪🇸", status: "Final" },
-                { home: "🇳🇴 NOR", score: "1 : 4", away: "FRA 🇫🇷", status: "Final" },
-                { home: "🇺🇸 USA", score: "2 : 3", away: "TUR 🇹🇷", status: "En Vivo" }
-            ];
-
-            const contenedor = document.getElementById('partidos-mundial');
-            contenedor.innerHTML = '';
-
-            partidosSimulados.forEach(partido => {
-                contenedor.innerHTML += `
-                    <div class="match-card">
-                        <div class="match-row">
-                            <span class="team-home">${partido.home}</span>
-                            <span class="score">${partido.score}</span>
-                            <span class="team-away">${partido.away}</span>
-                        </div>
-                        <div class="status" style="${partido.status === 'En Vivo' ? 'background-color:#990000; color:#fff;' : ''}">${partido.status}</div>
-                    </div>
-                `;
-            });
-        } catch (error) {
-            console.error("Error cargando los goles del Mundial", error);
-        }
-    }
-
-    // Actualiza los resultados automáticamente cada 60 segundos
-    setInterval(actualizarMarcador, 60000);
-    actualizarMarcador();
-</script>
 
 </body>
 </html>
