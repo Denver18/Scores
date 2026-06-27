@@ -57,9 +57,8 @@
             color: white;
         }
         .tab-btn.active[data-tab="proximos"] {
-            background-color: #172a21;
+            background-color: #00a86b;
             color: white;
-            border: 1px solid #233d30;
         }
         /* Estado inactivo general */
         .tab-btn:not(.active) {
@@ -86,11 +85,11 @@
             padding: 12px;
             margin-bottom: 10px;
             border: 1px solid #112e21;
-            display: none; /* Controlado mediante JS */
+            display: none; /* Oculto por defecto para que JS lo controle */
         }
         /* Mostrar elementos activos */
         .match-card.show {
-            display: block;
+            display: block !important;
         }
         .match-row {
             display: flex;
@@ -106,12 +105,9 @@
         .team-box.right {
             justify-content: flex-end;
         }
-        .flag {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid #1f4231;
+        .flag-emoji {
+            font-size: 20px;
+            line-height: 1;
         }
         .team-name {
             color: white;
@@ -175,104 +171,112 @@
         </div>
         
         <div class="matches-list">
-            <!-- PESTAÑA: EN VIVO (Muestra partidos activos y terminados de la jornada) -->
-            
-            <!-- Partido 1 -->
+            <!-- PARTIDOS EN VIVO -->
             <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="URU">
+                        <span class="flag-emoji">🇺🇾</span>
                         <span class="team-name">URU</span>
                     </div>
                     <div class="score-box score-live">0 : 1</div>
                     <div class="team-box right">
                         <span class="team-name">ESP</span>
-                        <img class="flag" src="https://flagcdn.com" alt="ESP">
+                        <span class="flag-emoji">🇪🇸</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
             </div>
 
-            <!-- Partido 2 -->
             <div class="match-card show" data-type="vivo" style="border-left: 3px solid #ff3b30;">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="CPV">
+                        <span class="flag-emoji">🇨🇻</span>
                         <span class="team-name">CPV</span>
                     </div>
                     <div class="score-box score-live">0 : 0</div>
                     <div class="team-box right">
                         <span class="team-name">KSA</span>
-                        <img class="flag" src="https://flagcdn.com" alt="KSA">
+                        <span class="flag-emoji">🇸🇦</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-live">🔴 En Vivo</span></center>
             </div>
 
-            <!-- Partido 3 -->
+            <!-- PARTIDOS FINALIZADOS -->
             <div class="match-card show" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="NOR">
+                        <span class="flag-emoji">🇳🇴</span>
                         <span class="team-name">NOR</span>
                     </div>
                     <div class="score-box score-final">1 : 4</div>
                     <div class="team-box right">
                         <span class="team-name">FRA</span>
-                        <img class="flag" src="https://flagcdn.com" alt="FRA">
+                        <span class="flag-emoji">🇫🇷</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <!-- Partido 4 -->
             <div class="match-card show" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="SEN">
+                        <span class="flag-emoji">🇸🇳</span>
                         <span class="team-name">SEN</span>
                     </div>
                     <div class="score-box score-final">5 : 0</div>
                     <div class="team-box right">
                         <span class="team-name">IRQ</span>
-                        <img class="flag" src="https://flagcdn.com" alt="IRQ">
+                        <span class="flag-emoji">🇮🇶</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <!-- Partido 5 -->
             <div class="match-card show" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="TUR">
+                        <span class="flag-emoji">🇹🇷</span>
                         <span class="team-name">TUR</span>
                     </div>
                     <div class="score-box score-final">3 : 2</div>
                     <div class="team-box right">
                         <span class="team-name">USA</span>
-                        <img class="flag" src="https://flagcdn.com" alt="USA">
+                        <span class="flag-emoji">🇺🇸</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <!-- Partido 6 -->
             <div class="match-card show" data-type="vivo">
                 <div class="match-row">
                     <div class="team-box">
-                        <img class="flag" src="https://flagcdn.com" alt="PAR">
+                        <span class="flag-emoji">🇵🇾</span>
                         <span class="team-name">PAR</span>
                     </div>
                     <div class="score-box score-final">0 : 0</div>
                     <div class="team-box right">
                         <span class="team-name">AUS</span>
-                        <img class="flag" src="https://flagcdn.com" alt="AUS">
+                        <span class="flag-emoji">🇦🇺</span>
                     </div>
                 </div>
                 <center><span class="status-badge badge-final">Final</span></center>
             </div>
 
-            <!-- Partido 7 -->
+            <div class="match-card show" data-type="vivo">
+                <div class="match-row">
+                    <div class="team-box">
+                        <span class="flag-emoji">🇯🇵</span>
+                        <span class="team-name">JPN</span>
+                    </div>
+                    <div class="score-box score-final">1 : 1</div>
+                    <div class="team-box right">
+                        <span class="team-name">SWE</span>
+                        <span class="flag-emoji">🇸🇪</span>
+                    </div>
+                </div>
+                <center><span class="status-badge badge-final">Final</span></center>
+            </div>
+
             <div class="match-card show" data-type="vivo">
                 <div class="match-row">
